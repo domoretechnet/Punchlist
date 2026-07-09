@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Punchlist — Talk through your app. Ship the fixes.</title>
+<meta name="description" content="Punchlist records your screen while you narrate, pairs every screen with what you said, and hands the punch list straight to your AI coding tools.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0b0b0d;
+    --card: #1a1a1e;
+    --text: #f5f5f7;
+    --muted: #9b9ba3;
+    --accent: #2f7cf6;
+    --border: #2a2a30;
+    --code-bg: #131317;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff;
+      --card: #f4f4f6;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --border: #e3e3e8;
+      --code-bg: #f0f0f3;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    padding: 0 20px 80px;
+  }
+  main { max-width: 680px; margin: 0 auto; }
+  header { text-align: center; padding: 72px 0 48px; }
+  .icon {
+    width: 96px; height: 96px; border-radius: 22px;
+    background: linear-gradient(160deg, #3d8bff, #1b5fd9);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .icon svg { width: 52px; height: 52px; }
+  h1 { font-size: 40px; letter-spacing: -0.5px; }
+  .tagline { font-size: 21px; color: var(--muted); margin-top: 8px; }
+  h2 { font-size: 24px; margin: 56px 0 16px; letter-spacing: -0.3px; }
+  p { color: var(--text); }
+  .muted { color: var(--muted); }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px 22px; margin: 14px 0;
+  }
+  ol.steps { padding-left: 0; counter-reset: step; list-style: none; }
+  ol.steps li {
+    counter-increment: step; position: relative;
+    padding: 0 0 18px 44px;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-size: 15px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    overflow-x: auto; margin: 10px 0;
+    font: 14px/1.5 ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  code { font: inherit; }
+  p code, li code {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 5px; padding: 1px 6px; font-size: 15px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .badge {
+    display: inline-block; font-size: 13px; font-weight: 600;
+    color: var(--accent); border: 1px solid var(--accent);
+    border-radius: 999px; padding: 3px 12px; margin-bottom: 14px;
+  }
+  ul.features { padding-left: 0; list-style: none; }
+  ul.features li { padding: 6px 0 6px 28px; position: relative; color: var(--muted); }
+  ul.features li::before {
+    content: "✓"; position: absolute; left: 4px; color: var(--accent); font-weight: 700;
+  }
+  ul.features li strong { color: var(--text); font-weight: 600; }
+  footer {
+    margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
+    font-size: 14px; color: var(--muted); text-align: center;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round">
+        <line x1="4"  y1="10" x2="4"  y2="14"/>
+        <line x1="8"  y1="7"  x2="8"  y2="17"/>
+        <line x1="12" y1="4"  x2="12" y2="20"/>
+        <line x1="16" y1="7"  x2="16" y2="17"/>
+        <line x1="20" y1="10" x2="20" y2="14"/>
+      </svg>
+    </div>
+    <h1>Punchlist</h1>
+    <p class="tagline">Talk through your app. Ship the fixes.</p>
+  </header>
 
+  <p>
+    Punchlist records your iPhone screen while you narrate what's wrong. It detects each
+    unique screen, transcribes your words on-device, and pairs them into a clean punch
+    list — then serves it over your own Wi-Fi to Claude or any AI coding tool that speaks
+    MCP. Nothing ever touches the cloud.
+  </p>
+
+  <h2>Get the app</h2>
+  <div class="card">
+    <span class="badge">Coming soon</span>
+    <p class="muted">Punchlist is in final testing and will be available on the App Store shortly.</p>
+  </div>
+
+  <h2>Connect your computer</h2>
+  <p class="muted" style="margin-bottom:18px">Requires Node.js 20 or later. Your phone and computer must be on the same Wi-Fi network.</p>
+
+  <ol class="steps">
+    <li>
+      <strong>Enable sharing on your phone.</strong><br>
+      <span class="muted">In Punchlist, open the <strong>Connect</strong> tab and switch on
+      <em>Share over local network</em>. A 6-digit pairing code appears. Sharing stays on
+      across launches until you turn it off.</span>
+    </li>
+    <li>
+      <strong>Add the MCP server.</strong><br>
+      <span class="muted">For Claude Code, run:</span>
+      <pre><code>claude mcp add punchlist -- npx -y punchlist-mcp</code></pre>
+      <span class="muted">For Claude Desktop, add this to <code>claude_desktop_config.json</code>:</span>
+      <pre><code>{
+  "mcpServers": {
+    "punchlist": {
+      "command": "npx",
+      "args": ["-y", "punchlist-mcp"]
+    }
+  }
+}</code></pre>
+    </li>
+    <li>
+      <strong>Pair once.</strong><br>
+      <span class="muted">Ask Claude to <em>“pair with my Punchlist device”</em> and give it
+      the 6-digit code from the Connect tab. Pairing pins your phone's TLS certificate —
+      from then on every transfer is encrypted end-to-end on your network.</span>
+    </li>
+    <li>
+      <strong>Ship the fixes.</strong><br>
+      <span class="muted">Record a session on your phone, then tell Claude to
+      <em>“pull my latest punchlist session.”</em> It gets every screenshot, your synced
+      transcript, and your standing per-app instructions — and marks the session processed
+      when it's done.</span>
+    </li>
+  </ol>
+
+  <h2>How it works</h2>
+  <ul class="features">
+    <li><strong>On-device transcription.</strong> Your narration never leaves the phone as audio.</li>
+    <li><strong>Automatic screen detection.</strong> Each unique screen becomes one punch-list entry, paired with the words you said while it was visible.</li>
+    <li><strong>Local network only.</strong> Sessions are served over TLS on your Wi-Fi with a certificate your computer pins at pairing. No cloud, no accounts.</li>
+    <li><strong>Per-app organization.</strong> Register the apps you're building; every session is tagged, filtered, and delivered with that app's custom processing instructions.</li>
+    <li><strong>Closes the loop.</strong> When your AI tool finishes acting on a session, it's marked processed on the phone — even if the phone was asleep at the time.</li>
+  </ul>
+
+  <footer>
+    <p>Punchlist — DoMore Tech LLC</p>
+  </footer>
+</main>
+</body>
+</html>
