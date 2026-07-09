@@ -82,7 +82,9 @@
     color: var(--accent); background: rgba(47, 124, 246, 0.12);
     border: 1px solid rgba(47, 124, 246, 0.25);
   }
-  .soon { font-size: 14px; color: var(--muted); margin-top: 14px; }
+  .btn.soon { opacity: 0.55; box-shadow: none; cursor: default; }
+  .btn.soon:hover { transform: none; box-shadow: none; }
+  .soon-note { font-size: 14px; color: var(--muted); margin-top: 14px; }
 
   /* ── Sections ─────────────────────────────────────── */
   h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.4px; margin: 76px 0 8px; }
@@ -172,9 +174,13 @@
     <h1 class="rise d1">Talk through your app.<br>Ship the fixes.</h1>
     <p class="tagline rise d2">The fastest way to turn “this looks wrong” into fixed code: narrate over your app, and your AI assistant gets every screenshot with exactly what you said about it.</p>
     <div class="cta rise d3">
-      <a class="btn btn-primary" href="install.html">Set up in 2 minutes →</a>
+      <!-- TestFlight: swap this span for
+           <a class="btn btn-primary" href="https://testflight.apple.com/join/XXXXXXXX">Join the beta on TestFlight</a>
+           when the public link exists. -->
+      <span class="btn btn-primary soon" aria-disabled="true">Join the beta on TestFlight</span>
+      <a class="btn btn-secondary" href="install.html">Connect to your AI →</a>
     </div>
-    <p class="soon rise d4">iPhone app coming soon to the App Store</p>
+    <p class="soon-note rise d4">Beta opening soon — the setup below works the moment you're in.</p>
   </header>
 
   <section class="reveal">
