@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Punchlist — Talk through your app. Ship the fixes.</title>
-<meta name="description" content="Punchlist records your iPhone screen while you narrate, pairs every screen with what you said, and hands the punch list straight to your AI coding tools.">
+<meta name="description" content="Narrate over your app while Punchlist records. Your AI assistant gets every screenshot with exactly what you said about it.">
 <style>
   :root {
     color-scheme: light dark;
     --bg: #0A0A0C; --surface: #16161A; --border: #26262C;
     --text: #F5F5F7; --muted: #98989F;
-    --accent: #2F7CF6; --code-bg: #131317; --line: #26262C;
+    --accent: #2F7CF6; --code-bg: #131317;
   }
   @media (prefers-color-scheme: light) {
     :root {
       --bg: #FFFFFF; --surface: #F5F5F7; --border: #E5E5EA;
-      --text: #1D1D1F; --muted: #6E6E73; --code-bg: #F0F0F3; --line: #E5E5EA;
+      --text: #1D1D1F; --muted: #6E6E73; --code-bg: #F0F0F3;
     }
   }
   * { box-sizing: border-box; margin: 0; }
@@ -27,15 +27,33 @@
   main { max-width: 720px; margin: 0 auto; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .muted { color: var(--muted); }
+
+  /* ── Nav ──────────────────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    margin: 0 -20px; padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .inner { max-width: 720px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; }
+  nav .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(160deg, #4A9BFF, #1E63E0);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  nav .mark svg { width: 15px; height: 15px; }
+  nav .word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; }
+  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 15px; font-weight: 500; }
+  nav .links a { color: var(--muted); }
+  nav .links a:hover { color: var(--accent); text-decoration: none; }
 
   /* ── Hero ─────────────────────────────────────────── */
-  header {
-    position: relative; text-align: center; padding: 88px 0 64px;
-  }
+  header { position: relative; text-align: center; padding: 84px 0 68px; }
   header::before {
     content: ""; position: absolute; inset: -40px -80px auto;
-    height: 420px; pointer-events: none; z-index: -1;
+    height: 440px; pointer-events: none; z-index: -1;
     background: radial-gradient(ellipse 60% 55% at 50% 30%, rgba(47,124,246,0.18), transparent 70%);
   }
   .tile {
@@ -45,43 +63,40 @@
     box-shadow: 0 16px 44px rgba(47, 124, 246, 0.35);
   }
   .tile svg { width: 60px; height: 60px; }
-  @media (prefers-reduced-motion: no-preference) {
-    .tile line { animation: pulse 2.6s ease-in-out infinite; transform-origin: center; }
-    .tile line:nth-child(2) { animation-delay: 0.15s; }
-    .tile line:nth-child(3) { animation-delay: 0.3s; }
-    .tile line:nth-child(4) { animation-delay: 0.45s; }
-    .tile line:nth-child(5) { animation-delay: 0.6s; }
-    @keyframes pulse { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.55); } }
-  }
   h1 { font-size: 46px; font-weight: 700; letter-spacing: -1px; line-height: 1.12; }
-  .tagline { font-size: 21px; color: var(--muted); margin-top: 14px; }
+  .tagline { font-size: 21px; color: var(--muted); margin: 14px auto 0; max-width: 34ch; }
   .cta { margin-top: 32px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 17px; font-weight: 600; text-decoration: none;
     padding: 14px 26px; border-radius: 14px; border: 0; cursor: pointer;
-    transition: transform 0.15s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
-  .btn:hover { transform: translateY(-1px); text-decoration: none; }
+  .btn:hover { transform: translateY(-2px); text-decoration: none; }
   .btn-primary {
     color: #fff; background: linear-gradient(160deg, #4A9BFF, #1E63E0);
     box-shadow: 0 8px 24px rgba(47, 124, 246, 0.35);
   }
-  .btn-primary.soon { opacity: 0.55; box-shadow: none; cursor: default; }
-  .btn-primary.soon:hover { transform: none; }
+  .btn-primary:hover { box-shadow: 0 14px 34px rgba(47, 124, 246, 0.45); }
   .btn-secondary {
     color: var(--accent); background: rgba(47, 124, 246, 0.12);
     border: 1px solid rgba(47, 124, 246, 0.25);
   }
+  .soon { font-size: 14px; color: var(--muted); margin-top: 14px; }
 
   /* ── Sections ─────────────────────────────────────── */
-  h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.4px; margin: 72px 0 8px; }
+  h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.4px; margin: 76px 0 8px; }
   .lede { color: var(--muted); margin-bottom: 26px; }
-
   .loop { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 26px; }
   .card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 18px; padding: 22px;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(47, 124, 246, 0.45);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.25);
   }
   .glyph {
     width: 40px; height: 40px; border-radius: 11px; margin-bottom: 14px;
@@ -92,45 +107,6 @@
   .card h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
   .card p { color: var(--muted); font-size: 14.5px; }
 
-  /* ── Steps ────────────────────────────────────────── */
-  ol.steps { list-style: none; padding: 0; counter-reset: step; margin-top: 8px; }
-  ol.steps li { counter-increment: step; position: relative; padding: 0 0 30px 54px; }
-  ol.steps li:not(:last-child)::after {
-    content: ""; position: absolute; left: 15px; top: 40px; bottom: 6px;
-    width: 2px; background: var(--line); border-radius: 2px;
-  }
-  ol.steps li::before {
-    content: counter(step);
-    position: absolute; left: 0; top: 0;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: linear-gradient(160deg, #4A9BFF, #1E63E0); color: #fff;
-    font-size: 15px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-  ol.steps b { display: block; font-size: 18px; font-weight: 600; margin-bottom: 3px; }
-  ol.steps .sub { color: var(--muted); font-size: 15.5px; }
-
-  /* ── Code ─────────────────────────────────────────── */
-  .codeblock {
-    background: var(--code-bg); border: 1px solid var(--border);
-    border-radius: 12px; overflow: hidden; margin: 12px 0;
-  }
-  .codebar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 7px 14px; border-bottom: 1px solid var(--border);
-    font-size: 12px; color: var(--muted);
-  }
-  .codebar .lang { font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-  pre { margin: 0; padding: 13px 16px; overflow-x: auto;
-        font: 13.5px/1.55 ui-monospace, "SF Mono", Menlo, monospace; }
-  .k { color: #4A9BFF; }
-  p code, li code, .sub code {
-    background: var(--code-bg); border: 1px solid var(--border);
-    border-radius: 6px; padding: 1px 7px; font-size: 14px;
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-  }
-
-  /* ── Features ─────────────────────────────────────── */
   .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4px 28px; padding: 0; list-style: none; margin-top: 20px; }
   .features li { padding: 9px 0 9px 30px; position: relative; color: var(--muted); font-size: 15.5px; }
   .features li::before {
@@ -139,54 +115,89 @@
   }
   .features b { color: var(--text); font-weight: 600; }
 
-  /* ── Privacy strip ────────────────────────────────── */
   .privacy {
-    margin-top: 72px; text-align: center;
+    margin-top: 76px; text-align: center;
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 18px; padding: 30px 24px;
+    border-radius: 18px; padding: 34px 24px;
   }
   .privacy h2 { margin: 0 0 6px; font-size: 22px; }
-  .privacy p { color: var(--muted); font-size: 15.5px; max-width: 52ch; margin: 0 auto; }
+  .privacy p { color: var(--muted); font-size: 15.5px; max-width: 52ch; margin: 0 auto 18px; }
 
   footer {
     margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
     font-size: 14px; color: var(--muted); text-align: center;
   }
+
+  /* ── Motion ───────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .tile line { animation: pulse 2.6s ease-in-out infinite; transform-origin: center; }
+    .tile line:nth-child(2) { animation-delay: 0.15s; }
+    .tile line:nth-child(3) { animation-delay: 0.3s; }
+    .tile line:nth-child(4) { animation-delay: 0.45s; }
+    .tile line:nth-child(5) { animation-delay: 0.6s; }
+    @keyframes pulse { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.55); } }
+
+    header::before { animation: breathe 7s ease-in-out infinite; }
+    @keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+    .rise { opacity: 0; animation: rise 0.7s ease forwards; }
+    .rise.d1 { animation-delay: 0.08s; } .rise.d2 { animation-delay: 0.18s; }
+    .rise.d3 { animation-delay: 0.3s; }  .rise.d4 { animation-delay: 0.42s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .loop .card:nth-child(2) { transition-delay: 0.1s; }
+    .loop .card:nth-child(3) { transition-delay: 0.2s; }
+  }
 </style>
 </head>
 <body>
+<nav>
+  <div class="inner">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
+        <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
+        <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
+        <line x1="20" y1="10" x2="20" y2="14"/>
+      </svg>
+    </span>
+    <span class="word">Punchlist</span>
+    <span class="links"><a href="install.html">Install</a></span>
+  </div>
+</nav>
 <main>
   <header>
-    <div class="tile" aria-hidden="true">
+    <div class="tile rise" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round">
         <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
         <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
         <line x1="20" y1="10" x2="20" y2="14"/>
       </svg>
     </div>
-    <h1>Talk through your app.<br>Ship the fixes.</h1>
-    <p class="tagline">The fastest way to turn “this looks wrong” into fixed code: narrate over your app, and your AI assistant gets every screenshot with exactly what you said about it.</p>
-    <div class="cta">
-      <span class="btn btn-primary soon">App Store — coming soon</span>
-      <a class="btn btn-secondary" href="#connect">Connect your computer</a>
+    <h1 class="rise d1">Talk through your app.<br>Ship the fixes.</h1>
+    <p class="tagline rise d2">The fastest way to turn “this looks wrong” into fixed code: narrate over your app, and your AI assistant gets every screenshot with exactly what you said about it.</p>
+    <div class="cta rise d3">
+      <a class="btn btn-primary" href="install.html">Set up in 2 minutes →</a>
     </div>
+    <p class="soon rise d4">iPhone app coming soon to the App Store</p>
   </header>
 
-  <section>
+  <section class="reveal">
     <h2>The loop</h2>
     <p class="lede">Feedback goes from your mouth to your codebase without a single ticket.</p>
     <div class="loop">
-      <div class="card">
+      <div class="card reveal">
         <div class="glyph">◉</div>
         <h3>Record</h3>
         <p>Use your app and say what's wrong. Punchlist captures each unique screen and transcribes your words on-device.</p>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="glyph">⇣</div>
         <h3>Pull</h3>
         <p>Your AI tool fetches sessions over your Wi-Fi — every screenshot paired with exactly what you said while it was visible.</p>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="glyph">✓</div>
         <h3>Ship</h3>
         <p>Your AI tool implements the fixes and marks the session processed on your phone. The loop is closed.</p>
@@ -194,47 +205,11 @@
     </div>
   </section>
 
-  <section id="connect">
-    <h2>Connect your computer</h2>
-    <p class="lede">Works with any MCP-compatible AI tool — Claude Code and Claude Desktop shown below. Requires Node.js 20 or later, phone and computer on the same Wi-Fi.</p>
-    <ol class="steps">
-      <li>
-        <b>Enable sharing on your phone</b>
-        <span class="sub">In Punchlist, open the <b>Connect</b> tab and switch on <em>Share over local network</em>. A 6-digit pairing code appears — sharing stays on across launches until you turn it off.</span>
-      </li>
-      <li>
-        <b>Add the MCP server</b>
-        <span class="sub">For Claude Code:</span>
-        <div class="codeblock">
-          <div class="codebar"><span class="lang">Terminal</span><span>Claude Code</span></div>
-          <pre><span class="k">claude</span> mcp add punchlist -- npx -y punchlist-mcp</pre>
-        </div>
-        <span class="sub">For Claude Desktop, add to <code>claude_desktop_config.json</code>:</span>
-        <div class="codeblock">
-          <div class="codebar"><span class="lang">JSON</span><span>claude_desktop_config.json</span></div>
-          <pre>{
-  "mcpServers": {
-    "punchlist": { "command": "npx", "args": ["-y", "punchlist-mcp"] }
-  }
-}</pre>
-        </div>
-      </li>
-      <li>
-        <b>Pair once</b>
-        <span class="sub">Ask your assistant to <em>“pair with my Punchlist device”</em> and give it the 6-digit code. Pairing pins your phone's TLS certificate — every transfer after that is encrypted end-to-end on your network.</span>
-      </li>
-      <li>
-        <b>Ship the fixes</b>
-        <span class="sub">Record a session, then say <em>“pull my latest punchlist session.”</em> Your tool gets the screenshots, the synced transcript, and your standing per-app instructions — and marks the session processed when it's done.</span>
-      </li>
-    </ol>
-  </section>
-
-  <section>
+  <section class="reveal">
     <h2>Built for the way you actually work</h2>
     <ul class="features">
       <li><b>On-device transcription.</b> Your narration never leaves the phone as audio.</li>
-      <li><b>Automatic screen detection.</b> Each unique screen becomes one punch-list entry.</li>
+      <li><b>Automatic screen detection.</b> Each unique screen becomes one entry to fix.</li>
       <li><b>Per-app organization.</b> Sessions are tagged, filtered, and delivered with that app's custom instructions.</li>
       <li><b>Photo &amp; note sessions.</b> Talk over a screenshot, or dictate a quick note — same pipeline.</li>
       <li><b>Tool-agnostic.</b> Standard MCP — works with Claude, Cursor, Zed, or anything that speaks the protocol.</li>
@@ -242,14 +217,27 @@
     </ul>
   </section>
 
-  <section class="privacy">
+  <section class="privacy reveal">
     <h2>No cloud. No accounts.</h2>
     <p>Sessions are served over TLS on your own Wi-Fi with a certificate your computer pins at pairing. Nothing is uploaded anywhere, ever.</p>
+    <a class="btn btn-secondary" href="install.html">Connect your computer →</a>
   </section>
 
   <footer>
     <p>Punchlist — DoMore Tech LLC</p>
   </footer>
 </main>
+<script>
+  if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  } else {
+    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+  }
+</script>
 </body>
 </html>
