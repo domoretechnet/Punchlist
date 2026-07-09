@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Install — Punchlist</title>
-<meta name="description" content="Connect your computer to Punchlist: install the MCP server, pair once, and pull sessions into your AI coding tool.">
+<title>Download the Desktop extension — Punchlist</title>
+<meta name="description" content="Download the Punchlist extension for Claude Desktop — a one-click install, no config file or Node setup required.">
 <style>
   :root {
     color-scheme: light dark;
@@ -52,7 +52,32 @@
   h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.7px; }
   .lede { color: var(--muted); margin-top: 10px; }
 
-  ol.steps { list-style: none; padding: 0; counter-reset: step; margin-top: 40px; }
+  .download-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: 30px 26px; margin-top: 36px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .download-card .badge {
+    width: 58px; height: 58px; border-radius: 15px;
+    background: linear-gradient(160deg, #4A9BFF, #1E63E0);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+  }
+  .download-card .badge svg { width: 30px; height: 30px; }
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: 17px;
+    padding: 14px 28px; border-radius: 12px; margin-top: 4px;
+  }
+  .btn-download:hover { text-decoration: none; filter: brightness(1.06); }
+  .btn-download svg { width: 18px; height: 18px; }
+  .meta { color: var(--muted); font-size: 14px; margin-top: 14px; }
+  .meta code {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1px 7px; font-size: 13px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  ol.steps { list-style: none; padding: 0; counter-reset: step; margin-top: 44px; }
   ol.steps li { counter-increment: step; position: relative; padding: 0 0 32px 54px; }
   ol.steps li:not(:last-child)::after {
     content: ""; position: absolute; left: 15px; top: 40px; bottom: 6px;
@@ -68,21 +93,7 @@
   }
   ol.steps b { display: block; font-size: 18px; font-weight: 600; margin-bottom: 3px; }
   ol.steps .sub { color: var(--muted); font-size: 15.5px; }
-
-  .codeblock {
-    background: var(--code-bg); border: 1px solid var(--border);
-    border-radius: 12px; overflow: hidden; margin: 12px 0;
-  }
-  .codebar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 7px 14px; border-bottom: 1px solid var(--border);
-    font-size: 12px; color: var(--muted);
-  }
-  .codebar .lang { font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-  pre { margin: 0; padding: 13px 16px; overflow-x: auto;
-        font: 13.5px/1.55 ui-monospace, "SF Mono", Menlo, monospace; }
-  .k { color: #4A9BFF; }
-  .sub code, p code {
+  ol.steps .sub code, p code {
     background: var(--code-bg); border: 1px solid var(--border);
     border-radius: 6px; padding: 1px 7px; font-size: 14px;
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -122,56 +133,56 @@
       </span>
       <span class="word">Punchlist</span>
     </a>
-    <span class="links"><a href="./">Home</a></span>
+    <span class="links"><a href="./">Home</a><a href="install.html">Install</a></span>
   </div>
 </nav>
 <main>
   <header>
-    <h1 class="rise">Connect your computer</h1>
-    <p class="lede rise d1">Two minutes, four steps. Works with any MCP-compatible AI tool — Claude Code and Claude Desktop shown below. Requires Node.js 20 or later, phone and computer on the same Wi-Fi.</p>
+    <h1 class="rise">Punchlist for Claude Desktop</h1>
+    <p class="lede rise d1">A one-click extension — no config file, no Node setup. Download it, open it in Claude Desktop, and the Punchlist tools appear.</p>
   </header>
+
+  <div class="download-card rise d2">
+    <span class="badge" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/>
+      </svg>
+    </span>
+    <a class="btn-download" href="punchlist.mcpb" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/>
+      </svg>
+      Download the extension
+    </a>
+    <p class="meta"><code>punchlist.mcpb</code> · v0.3.1 · macOS &amp; Windows · Claude Desktop</p>
+  </div>
 
   <ol class="steps">
     <li class="reveal">
+      <b>Download the extension</b>
+      <span class="sub">Save <code>punchlist.mcpb</code> using the button above.</span>
+    </li>
+    <li class="reveal">
+      <b>Open it in Claude Desktop</b>
+      <span class="sub">Double-click the downloaded file, or open Claude Desktop → <b>Settings → Extensions</b> and add it there. Claude installs it and starts the Punchlist server automatically — nothing to configure.</span>
+    </li>
+    <li class="reveal">
       <b>Enable sharing on your phone</b>
-      <span class="sub">In Punchlist, open the <b>Connect</b> tab and switch on <em>Share over local network</em>. A 6-digit pairing code appears — sharing stays on across launches until you turn it off.</span>
+      <span class="sub">In Punchlist, open the <b>Connect</b> tab and switch on <em>Share over local network</em>. A 6-digit pairing code appears.</span>
     </li>
     <li class="reveal">
-      <b>Add the MCP server</b>
-      <span class="sub">For Claude Code:</span>
-      <div class="codeblock">
-        <div class="codebar"><span class="lang">Terminal</span><span>Claude Code</span></div>
-        <pre><span class="k">claude</span> mcp add punchlist -- npx -y punchlist-mcp</pre>
-      </div>
-      <span class="sub">For Claude Desktop, add to <code>claude_desktop_config.json</code>:</span>
-      <div class="codeblock">
-        <div class="codebar"><span class="lang">JSON</span><span>claude_desktop_config.json</span></div>
-        <pre>{
-  "mcpServers": {
-    "punchlist": { "command": "npx", "args": ["-y", "punchlist-mcp"] }
-  }
-}</pre>
-      </div>
-      <span class="sub">Prefer not to edit a config file? Claude Desktop can install Punchlist as a <a href="download.html">one-click extension</a> instead — no JSON, no Node setup.</span>
-    </li>
-    <li class="reveal">
-      <b>Pair once</b>
-      <span class="sub">Ask your assistant to <em>“pair with my Punchlist device”</em> and give it the 6-digit code. Pairing pins your phone's TLS certificate — every transfer after that is encrypted end-to-end on your network.</span>
-    </li>
-    <li class="reveal">
-      <b>Ship the fixes</b>
-      <span class="sub">Record a session, then say <em>“pull my latest punchlist session.”</em> Your tool gets the screenshots, the synced transcript, and your standing per-app instructions — and marks the session processed when it's done.</span>
+      <b>Pair once, then pull sessions</b>
+      <span class="sub">Ask Claude to <em>“pair with my Punchlist device”</em> and give it the code. After that, say <em>“pull my latest punchlist session”</em> to get the screenshots and synced transcript. Off Wi-Fi? Run <em>“connect iCloud”</em> once to pull sessions over the internet too.</span>
     </li>
   </ol>
 
   <div class="note reveal">
-    <b>Using something other than Claude?</b> Any MCP client works: point it at the
-    <code>punchlist-mcp</code> command over stdio and the same tools appear —
-    device discovery, pairing, session pulls, and per-app instructions.
+    <b>Using Claude Code, or another MCP client?</b> You don't need this file — install
+    over the command line instead. See the <a href="install.html">Install guide</a>.
   </div>
 
   <footer>
-    <p>Punchlist — DoMore Tech LLC · <a href="./">Home</a></p>
+    <p>Punchlist — DoMore Tech LLC · <a href="./">Home</a> · <a href="install.html">Install</a></p>
   </footer>
 </main>
 <script>
