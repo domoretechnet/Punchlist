@@ -128,7 +128,7 @@
 <main>
   <header>
     <h1 class="rise">Connect your computer</h1>
-    <p class="lede rise d1">Two minutes, four steps. Works with any MCP-compatible AI tool — Claude Code and Claude Desktop shown below. Requires Node.js 20 or later, phone and computer on the same Wi-Fi.</p>
+    <p class="lede rise d1">Two minutes, four steps. Works with any MCP-compatible AI tool — Claude CLI and Claude Desktop shown below. Requires Node.js 20 or later, phone and computer on the same Wi-Fi.</p>
   </header>
 
   <ol class="steps">
@@ -138,9 +138,9 @@
     </li>
     <li class="reveal">
       <b>Add the MCP server</b>
-      <span class="sub">For Claude Code:</span>
+      <span class="sub">For Claude CLI or other agents:</span>
       <div class="codeblock">
-        <div class="codebar"><span class="lang">Terminal</span><span>Claude Code</span></div>
+        <div class="codebar"><span class="lang">Terminal</span><span>Claude CLI</span></div>
         <pre><span class="k">claude</span> mcp add punchlist -- npx -y punchlist-mcp</pre>
       </div>
       <span class="sub">For Claude Desktop, add to <code>claude_desktop_config.json</code>:</span>
@@ -160,7 +160,7 @@
     </li>
     <li class="reveal">
       <b>Ship the fixes</b>
-      <span class="sub">Record a session, then say <em>“pull my latest punchlist session.”</em> Your tool gets the screenshots, the synced transcript, and your standing per-app instructions — and marks the session processed when it's done.</span>
+      <span class="sub">Record a session, then say <em>“pull my latest punchlist session.”</em> Your tool gets the screenshots, the synced transcript, and your standing per-app instructions — and asks you before marking the session processed.</span>
     </li>
   </ol>
 
