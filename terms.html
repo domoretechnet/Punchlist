@@ -101,7 +101,7 @@
 <main>
   <header class="doc">
     <h1>Punchlist Terms of Service (End-User License Agreement)</h1>
-    <p class="updated">Last Updated: July 10, 2026</p>
+    <p class="updated">Last Updated: July 12, 2026</p>
     <p class="doc-links">See also: <a href="privacy.html">Privacy Policy</a></p>
   </header>
 
@@ -123,7 +123,7 @@
 
   <p>Punchlist is a developer feedback tool. Using Apple's ReplayKit broadcast feature, it records your device's screen system-wide while you narrate aloud, transcribes your narration on-device, and produces a session bundle (transcript, screenshots, video, and audio) intended to be used with your own development tools, including AI coding assistants that you choose and control.</p>
 
-  <p>The App is designed so that your recordings remain on your device, in your own private iCloud account (if you enable optional cloud sync), and on your own computers (if you transfer sessions over your local network). DoMore Tech does not operate a server that receives your recordings, and we cannot access the contents of your private iCloud database. Details are in the Privacy Policy.</p>
+  <p>The App is designed so that your recordings remain on your device, in your own private iCloud account (if you enable optional cloud sync), and on your own computers (if you transfer sessions over your local network). DoMore Tech does not operate a server that receives your recordings, and we cannot access the contents of your private iCloud database. One optional feature, <strong>Tester Feedback Mode</strong> (Section 22), is the exception: if a developer invites you as a tester and you accept, feedback sessions you choose to send are delivered to that developer's iCloud rather than staying only in your hands. Details are in the Privacy Policy.</p>
 
   <h2 id="s3">3. Eligibility</h2>
 
@@ -180,6 +180,8 @@
   <p>As between you and DoMore Tech, <strong>you own your recordings, screenshots, transcripts, audio, and session bundles</strong> ("<strong>Your Content</strong>").</p>
 
   <p>The App is architected so that Your Content is stored on your device, in your own private iCloud database, and on computers you pair — DoMore Tech does not receive, host, or access Your Content. Accordingly, you grant DoMore Tech <strong>no license to Your Content</strong>, except the limited, automatic processing performed by the App software itself on your device (for example, transcription and packaging) as needed to provide the App's features to you. If DoMore Tech ever introduces features that transmit Your Content to DoMore Tech, we will update these Terms and the Privacy Policy first and any such license will be limited to operating those features.</p>
+
+  <p>If you participate in <strong>Tester Feedback Mode</strong>, additional terms governing feedback you submit or receive — including the limited license a tester grants to the inviting developer — are in Section 22.</p>
 
   <h2 id="s9">9. Transcription and Output Accuracy</h2>
 
@@ -264,7 +266,7 @@
 
   <h2 id="s19">19. Termination</h2>
 
-  <p>These Terms are effective until terminated. You may terminate them at any time by deleting the App. DoMore Tech may terminate these Terms and your license if you materially breach them. Upon termination, the license in Section 4 ends and you must stop using the App; Sections 6, 8, and 11 through 22 survive termination. Termination of these Terms does not affect your rights under the MIT License for <code>punchlist-mcp</code>, or your possession of Your Content, which remains yours.</p>
+  <p>These Terms are effective until terminated. You may terminate them at any time by deleting the App. DoMore Tech may terminate these Terms and your license if you materially breach them. Upon termination, the license in Section 4 ends and you must stop using the App; Sections 6, 8, and 11 through 23 survive termination. Termination of these Terms does not affect your rights under the MIT License for <code>punchlist-mcp</code>, or your possession of Your Content, which remains yours.</p>
 
   <h2 id="s20">20. Severability</h2>
 
@@ -274,7 +276,22 @@
 
   <p>These Terms, together with the Privacy Policy, are the entire agreement between you and DoMore Tech regarding the App and supersede all prior agreements regarding the App (they do not supersede the separate MIT License for <code>punchlist-mcp</code>, which governs that package). You may not assign these Terms without our prior written consent; we may assign them in connection with a merger, acquisition, or sale of assets, or to a successor entity. Our failure to enforce any provision is not a waiver. There are no third-party beneficiaries to these Terms except as stated in Section 16.9 and the persons identified in Sections 12 and 13 (DoMore Tech's owner, members, employees, and agents), solely to enforce those sections.</p>
 
-  <h2 id="s22">22. Contact</h2>
+  <h2 id="s22">22. Tester Feedback Mode</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Tester Feedback Mode lets a developer invite other people to record feedback on the developer's app and send it to the developer. If you send feedback as a tester, screenshots and your narration transcript (never video or audio) go to that developer's iCloud; you consent first, can review before sending, and can retract afterward — but once the developer has fetched a copy, retraction can't reach it. Feedback groups auto-delete after 90 days. Developers who receive feedback are responsible for handling it lawfully.</em></p></blockquote>
+
+  <p>Tester Feedback Mode is an optional feature that lets a developer using the App (a "<strong>Developer</strong>") invite other people (each a "<strong>Tester</strong>") to record feedback sessions on the Developer's app and submit them to that Developer. A Developer creates a "<strong>Feedback Group</strong>" for an app and shares an invitation link (an Apple CloudKit share URL); a person who opens the link and joins becomes a Tester in that group. Both roles are subject to these Terms.</p>
+
+  <ol>
+    <li><strong>Roles and what is shared.</strong> A Tester's submission consists of screenshots and the session manifest (session metadata and the full text transcript of the Tester's narration) only. <strong>A Tester's screen-recording video and raw microphone audio are never included in a submission.</strong> Submissions are delivered into the inviting Developer's own iCloud storage (a shared area of that Developer's private iCloud database) and are received by that Developer, <strong>not</strong> by DoMore Tech. As between the Tester and the Developer, the Tester owns their submission as Your Content (Section 8); by submitting, the Tester grants the inviting Developer a <strong>non-exclusive, worldwide, royalty-free license</strong> to store, view, reproduce, and use the submission for the purpose of receiving and acting on the feedback (including reviewing it with the Developer's own development tools). DoMore Tech takes no license to submissions and does not receive, host, or access them.</li>
+    <li><strong>Consent before capture.</strong> Before a Tester's first capture in a Feedback Group, the App presents a consent screen describing what is captured, that it is sent to the app's Developer (not DoMore Tech), that the Tester's narration is included as text, and the 90-day retention window. A Tester must agree to proceed. The recording-responsibility obligations in Section 6 apply to Testers in full.</li>
+    <li><strong>Review, decline, and retraction.</strong> A Tester may review the captured screens and transcript and remove frames or the entire session before submitting, and may decline to submit. After submitting, a Tester may retract a session, which deletes that session's record from the Developer's iCloud. <strong>Retraction cannot reach a copy the Developer has already fetched</strong> to a computer or other tool; once fetched, such a copy is outside the App's control, and its handling and deletion are the Developer's responsibility. This is the same limitation that applies to any data another person has already downloaded.</li>
+    <li><strong>Group lifetime, capacity, and deletion.</strong> A Feedback Group automatically expires <strong>90 days after it is created</strong>; on expiry the invitation is revoked and the Tester-submitted records in the group are deleted from iCloud. A Developer may also end or process a session, remove a Tester from the group, or delete the group at any time — each of which deletes the affected records from the Developer's iCloud earlier. Removing a Tester ends that Tester's access and stops further submissions, and a Tester may leave a group at any time. A Feedback Group is limited to the platform maximum of Testers per group (currently <strong>100</strong>, set by Apple's CloudKit sharing limit).</li>
+    <li><strong>Developer responsibilities.</strong> A Developer who receives Tester submissions is responsible for handling them lawfully, including any personal information about the Tester or third parties that a submission may contain, and for providing any notices or obtaining any consents required of the Developer under applicable law. Received submissions are Your Content in the Developer's hands, and Sections 6, 11, 12, and 13 apply to the Developer's participation as they do to any other use of the App. DoMore Tech operates no server that receives submissions and cannot moderate, retrieve, or delete a submission once it has been fetched from iCloud by the Developer.</li>
+    <li><strong>No DoMore Tech intermediary.</strong> Tester Feedback Mode moves data between a Tester's device and the inviting Developer's iCloud using Apple's CloudKit sharing. DoMore Tech is not a party to, and is not responsible for, the feedback relationship between a Developer and a Tester, the content of any submission, or either party's use of the feature, beyond providing the App software itself as described in these Terms and the Privacy Policy.</li>
+  </ol>
+
+  <h2 id="s23">23. Contact</h2>
 
   <p><strong>DoMore Tech LLC</strong><br>
   Address: 2222 W Grand River Ave, Ste A, Okemos, MI 48864<br>
