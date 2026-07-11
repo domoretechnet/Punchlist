@@ -1,0 +1,123 @@
+<!-- @dsCard group="Pages" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Service — Punchlist</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0A0A0C; --surface: #16161A; --border: #26262C;
+    --text: #F5F5F7; --muted: #98989F; --accent: #2F7CF6;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #FFFFFF; --surface: #F5F5F7; --border: #E5E5EA; --text: #1D1D1F; --muted: #6E6E73; }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg); color: var(--text); padding: 0 20px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  nav {
+    position: sticky; top: 0; z-index: 30; margin: 0 -20px; padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .inner { max-width: 760px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; }
+  nav .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(160deg, #4A9BFF, #1E63E0);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  nav .mark svg { width: 15px; height: 15px; }
+  nav a.word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; color: var(--text); }
+  nav a.word:hover { text-decoration: none; }
+  nav .back { margin-left: auto; font-size: 15px; font-weight: 500; color: var(--muted); }
+  nav .back:hover { color: var(--accent); text-decoration: none; }
+
+  main { max-width: 760px; margin: 0 auto; }
+
+  .placeholder {
+    margin: 32px 0 40px; padding: 12px 16px; border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+    font-size: 13.5px; color: var(--text);
+  }
+  h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.6px; margin: 56px 0 6px; }
+  .updated { color: var(--muted); font-size: 14px; }
+  h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.2px; margin: 40px 0 10px; }
+  p { color: var(--muted); margin: 0 0 14px; max-width: 68ch; }
+  p.lead { color: var(--text); }
+  ul { color: var(--muted); margin: 0 0 14px; padding-left: 22px; }
+  li { margin: 4px 0; }
+  .contact { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--border);
+             font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<nav>
+  <div class="inner">
+    <a class="mark" href="index.html" aria-label="Punchlist home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
+        <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
+        <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
+        <line x1="20" y1="10" x2="20" y2="14"/>
+      </svg>
+    </a>
+    <a class="word" href="index.html">Punchlist</a>
+    <a class="back" href="index.html">&larr; Back to home</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Terms of Service</h1>
+  <p class="updated">Last updated: [DATE] &middot; DoMore Tech LLC</p>
+
+  <div class="placeholder">
+    <strong>Placeholder.</strong> This is a scaffold for the real Terms of Service. Replace the bracketed
+    text and section bodies with reviewed legal copy before launch.
+  </div>
+
+  <p class="lead">These Terms of Service govern your use of the Punchlist app and website, provided by DoMore Tech LLC. By using Punchlist you agree to these terms.</p>
+
+  <h2>1. The service</h2>
+  <p>Punchlist captures spoken sessions on your device and prepares them for your own coding agent. [Describe the service and any beta/TestFlight status.]</p>
+
+  <h2>2. Beta software</h2>
+  <p>Punchlist is currently distributed as a TestFlight beta and is provided as-is, without warranties. Features may change or break. [Add beta-specific terms.]</p>
+
+  <h2>3. Acceptable use</h2>
+  <ul>
+    <li>[What users may and may not do with the app.]</li>
+    <li>[Prohibited conduct.]</li>
+  </ul>
+
+  <h2>4. Your content</h2>
+  <p>You retain ownership of your sessions and the content you create. [Clarify any license you grant us, if any, and your responsibility for what you send to your agent.]</p>
+
+  <h2>5. Third-party services</h2>
+  <p>Punchlist is an independent product and is not affiliated with or endorsed by Anthropic or Apple. Your use of those services is governed by their own terms.</p>
+
+  <h2>6. Disclaimers &amp; limitation of liability</h2>
+  <p>[Standard as-is disclaimer and liability limitations.]</p>
+
+  <h2>7. Changes &amp; termination</h2>
+  <p>[How terms may change and how access may end.]</p>
+
+  <h2>8. Governing law</h2>
+  <p>[Governing jurisdiction.]</p>
+
+  <div class="contact">
+    Questions about these terms? Contact us at <a href="mailto:legal@example.com">legal@example.com</a>. <!-- replace with real address -->
+  </div>
+</main>
+</body>
+</html>

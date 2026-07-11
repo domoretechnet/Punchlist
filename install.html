@@ -1,10 +1,11 @@
+<!-- @dsCard group="Pages" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Install — Punchlist</title>
-<meta name="description" content="Connect your computer to Punchlist: install the MCP server, pair once, and pull sessions into your AI coding tool.">
+<meta name="description" content="Connect your computer to Punchlist. Pick your tool — Claude Desktop or Claude CLI / any AI agent — pair once, and pull sessions in.">
 <style>
   :root {
     color-scheme: light dark;
@@ -52,7 +53,23 @@
   h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.7px; }
   .lede { color: var(--muted); margin-top: 10px; }
 
-  ol.steps { list-style: none; padding: 0; counter-reset: step; margin-top: 40px; }
+  /* option picker */
+  .picker {
+    display: inline-flex; gap: 6px; margin-top: 30px; padding: 5px; flex-wrap: wrap;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  }
+  .opt {
+    border: 0; background: transparent; color: var(--muted); cursor: pointer;
+    font: 600 14.5px/1 -apple-system, system-ui, sans-serif;
+    padding: 10px 18px; border-radius: 999px;
+    transition: background .25s ease, color .25s ease;
+  }
+  .opt.on { background: linear-gradient(160deg, #4A9BFF, #1E63E0); color: #fff; }
+
+  .panel { display: none; }
+  .panel.on { display: block; }
+
+  ol.steps { list-style: none; padding: 0; counter-reset: step; margin-top: 36px; }
   ol.steps li { counter-increment: step; position: relative; padding: 0 0 32px 54px; }
   ol.steps li:not(:last-child)::after {
     content: ""; position: absolute; left: 15px; top: 40px; bottom: 6px;
@@ -66,7 +83,7 @@
     font-size: 15px; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
   }
-  ol.steps b { display: block; font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+  ol.steps li > b { display: block; font-size: 18px; font-weight: 600; margin-bottom: 3px; }
   ol.steps .sub { color: var(--muted); font-size: 15.5px; }
 
   .codeblock {
@@ -88,6 +105,17 @@
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
   }
 
+  /* download button for the Claude Desktop bundle */
+  .dl {
+    display: inline-flex; align-items: center; gap: 9px; margin: 14px 0 4px;
+    padding: 11px 17px; border-radius: 11px;
+    background: linear-gradient(160deg, #4A9BFF, #1E63E0); color: #fff;
+    font-weight: 600; font-size: 15px;
+  }
+  .dl:hover { text-decoration: none; filter: brightness(1.06); }
+  .dl svg { width: 17px; height: 17px; }
+  .filehint { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
   .note {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 14px; padding: 18px 20px; margin-top: 32px;
@@ -104,15 +132,13 @@
     .rise { opacity: 0; animation: rise 0.6s ease forwards; }
     .rise.d1 { animation-delay: 0.08s; } .rise.d2 { animation-delay: 0.16s; }
     @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.in { opacity: 1; transform: none; }
   }
 </style>
 </head>
 <body>
 <nav>
   <div class="inner">
-    <a class="home" href="./" style="display:flex;align-items:center;gap:10px">
+    <a class="home" href="index.html" style="display:flex;align-items:center;gap:10px">
       <span class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
           <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
@@ -122,69 +148,107 @@
       </span>
       <span class="word">Punchlist</span>
     </a>
-    <span class="links"><a href="./">Home</a></span>
+    <span class="links"><a href="index.html">Home</a></span>
   </div>
 </nav>
 <main>
   <header>
     <h1 class="rise">Connect your computer</h1>
-    <p class="lede rise d1">Two minutes, four steps. Works with any MCP-compatible AI tool — Claude CLI and Claude Desktop shown below. Requires Node.js 20 or later, phone and computer on the same Wi-Fi.</p>
+    <p class="lede rise d1">Pick your tool below. Pair once, then pull sessions straight into it. Requires your phone and computer on the same Wi&#8209;Fi.</p>
+    <div class="picker rise d2" role="tablist" aria-label="Install method">
+      <button type="button" class="opt on" data-t="desktop" role="tab" aria-selected="true">Claude Desktop</button>
+      <button type="button" class="opt" data-t="cli" role="tab" aria-selected="false">Claude CLI / Other AI Agent</button>
+    </div>
   </header>
 
-  <ol class="steps">
-    <li class="reveal">
-      <b>Enable sharing on your phone</b>
-      <span class="sub">In Punchlist, open the <b>Connect</b> tab and switch on <em>Share over local network</em>. A 6-digit pairing code appears — sharing stays on across launches until you turn it off.</span>
-    </li>
-    <li class="reveal">
-      <b>Add the MCP server</b>
-      <span class="sub">For Claude CLI or other agents:</span>
-      <div class="codeblock">
-        <div class="codebar"><span class="lang">Terminal</span><span>Claude CLI</span></div>
-        <pre><span class="k">claude</span> mcp add punchlist -- npx -y punchlist-mcp</pre>
-      </div>
-      <span class="sub">For Claude Desktop, add to <code>claude_desktop_config.json</code>:</span>
-      <div class="codeblock">
-        <div class="codebar"><span class="lang">JSON</span><span>claude_desktop_config.json</span></div>
-        <pre>{
+  <!-- ── Claude Desktop: one-click extension bundle ─────────────── -->
+  <section class="panel on" id="panel-desktop">
+    <ol class="steps">
+      <li>
+        <b>Enable sharing on your phone</b>
+        <span class="sub">In Punchlist, open the <b>Connect</b> tab and switch on <em>Share over local network</em>. A 6-digit pairing code appears &mdash; sharing stays on across launches until you turn it off.</span>
+      </li>
+      <li>
+        <b>Install the Punchlist extension</b>
+        <span class="sub">Download the extension bundle and double&#8209;click it &mdash; Claude Desktop installs it under <b>Settings &rarr; Extensions</b>. No terminal, no Node.js needed.</span>
+        <!-- TODO: point href at your real GitHub release asset -->
+        <a class="dl" href="https://github.com/domoretech/punchlist/releases/latest" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/>
+          </svg>
+          Download punchlist.mcpb
+        </a>
+        <div class="filehint">Latest release on GitHub &middot; macOS &amp; Windows &middot; drag into Claude Desktop if double&#8209;click doesn&rsquo;t open it.</div>
+      </li>
+      <li>
+        <b>Pair once</b>
+        <span class="sub">In a Claude Desktop chat, say <em>&ldquo;pair with my Punchlist device&rdquo;</em> and give it the 6&#8209;digit code. Pairing pins your phone&rsquo;s TLS certificate &mdash; every transfer after that is encrypted end&#8209;to&#8209;end on your network.</span>
+      </li>
+      <li>
+        <b>Pull your sessions</b>
+        <span class="sub">Record a session, then say <em>&ldquo;pull my latest punchlist session.&rdquo;</em> Claude gets the screenshots, the synced transcript, and your standing per&#8209;app instructions &mdash; and marks the session processed when it&rsquo;s done.</span>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ── Claude CLI / any MCP agent: npx package ────────────────── -->
+  <section class="panel" id="panel-cli">
+    <ol class="steps">
+      <li>
+        <b>Enable sharing on your phone</b>
+        <span class="sub">In Punchlist, open the <b>Connect</b> tab and switch on <em>Share over local network</em>. A 6-digit pairing code appears &mdash; sharing stays on across launches until you turn it off.</span>
+      </li>
+      <li>
+        <b>Add the MCP server</b>
+        <span class="sub">Claude Code &mdash; one command (requires Node.js 20+):</span>
+        <div class="codeblock">
+          <div class="codebar"><span class="lang">Terminal</span><span>Claude Code</span></div>
+          <pre><span class="k">claude</span> mcp add punchlist -- npx -y punchlist-mcp</pre>
+        </div>
+        <span class="sub">Any other MCP client &mdash; point it at the same command over stdio:</span>
+        <div class="codeblock">
+          <div class="codebar"><span class="lang">JSON</span><span>mcp config</span></div>
+          <pre>{
   "mcpServers": {
     "punchlist": { "command": "npx", "args": ["-y", "punchlist-mcp"] }
   }
 }</pre>
-      </div>
-      <span class="sub">Prefer not to edit a config file? Claude Desktop can install Punchlist as a <a href="download.html">one-click extension</a> instead — no JSON, no Node setup.</span>
-    </li>
-    <li class="reveal">
-      <b>Pair once</b>
-      <span class="sub">Ask your assistant to <em>“pair with my Punchlist device”</em> and give it the 6-digit code. Pairing pins your phone's TLS certificate — every transfer after that is encrypted end-to-end on your network.</span>
-    </li>
-    <li class="reveal">
-      <b>Ship the fixes</b>
-      <span class="sub">Record a session, then say <em>“pull my latest punchlist session.”</em> Your tool gets the screenshots, the synced transcript, and your standing per-app instructions — and asks you before marking the session processed.</span>
-    </li>
-  </ol>
-
-  <div class="note reveal">
-    <b>Using something other than Claude?</b> Any MCP client works: point it at the
-    <code>punchlist-mcp</code> command over stdio and the same tools appear —
-    device discovery, pairing, session pulls, and per-app instructions.
-  </div>
+        </div>
+      </li>
+      <li>
+        <b>Pair once</b>
+        <span class="sub">Ask your agent to <em>&ldquo;pair with my Punchlist device&rdquo;</em> and give it the 6&#8209;digit code. Pairing pins your phone&rsquo;s TLS certificate &mdash; every transfer after that is encrypted end&#8209;to&#8209;end on your network.</span>
+      </li>
+      <li>
+        <b>Pull your sessions</b>
+        <span class="sub">Record a session, then say <em>&ldquo;pull my latest punchlist session.&rdquo;</em> Your agent gets the screenshots, the synced transcript, and your standing per&#8209;app instructions &mdash; and marks the session processed when it&rsquo;s done.</span>
+      </li>
+    </ol>
+    <div class="note">
+      <b>Works with any MCP client.</b> The <code>punchlist-mcp</code> package exposes the same tools to every agent &mdash; device discovery, pairing, session pulls, and per&#8209;app instructions &mdash; over stdio.
+    </div>
+  </section>
 
   <footer>
-    <p>Punchlist — DoMore Tech LLC · <a href="./">Home</a></p>
+    <p>Punchlist — DoMore Tech LLC · <a href="index.html">Home</a></p>
   </footer>
 </main>
 <script>
-  if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      }
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-  } else {
-    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
-  }
+  (function () {
+    var opts = document.querySelectorAll(".opt");
+    var panels = { desktop: document.getElementById("panel-desktop"), cli: document.getElementById("panel-cli") };
+    opts.forEach(function (o) {
+      o.addEventListener("click", function () {
+        var t = o.getAttribute("data-t");
+        opts.forEach(function (x) {
+          var on = x === o;
+          x.classList.toggle("on", on);
+          x.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        Object.keys(panels).forEach(function (k) { panels[k].classList.toggle("on", k === t); });
+      });
+    });
+  })();
 </script>
 </body>
 </html>
