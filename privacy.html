@@ -99,7 +99,7 @@
 <main>
   <header class="doc">
     <h1>Punchlist Privacy Policy</h1>
-    <p class="updated">Last Updated: July 10, 2026</p>
+    <p class="updated">Last Updated: July 11, 2026</p>
     <p class="doc-links">See also: <a href="terms.html">Terms of Service</a></p>
   </header>
 
@@ -110,7 +110,7 @@
   <ul>
     <li><strong>Your recordings stay in your hands.</strong> Screen recordings, screenshots, audio, and transcripts are created and stored <strong>on your device</strong>. If you turn on optional cloud sync, they go to <strong>your own private iCloud database</strong> — which we cannot access. If you pair a computer, they go to <strong>your own computer</strong> over your local network. <strong>DoMore Tech operates no server that receives your recordings, and we never see their contents.</strong></li>
     <li><strong>Transcription happens on your device.</strong> Speech recognition uses Apple's on-device recognizer (with the on-device-only flag set) or an optional on-device whisper.cpp model. Your narration is not sent to us or to a speech-recognition cloud service by the App.</li>
-    <li><strong>We collect a small amount of anonymous-style usage and crash data</strong> through Google Firebase Analytics and Crashlytics (details, including the events we log, in Section 4.7). You can turn this off at any time in Settings (Section 7). No screenshots, transcripts, or audio are ever included in analytics or crash reports.</li>
+    <li><strong>We collect a small amount of anonymous-style usage and crash data</strong> through Google Firebase Analytics and Crashlytics (details, including the events we log, in Section 4.7). In the EEA and UK this is <strong>off unless you opt in</strong>; elsewhere it is on by default and you can turn it off at any time in Settings (Section 7). No screenshots, transcripts, or audio are ever included in analytics or crash reports.</li>
     <li><strong>No accounts. No ads. No tracking across apps. No sale of data. No IDFA.</strong></li>
   </ul>
 
@@ -168,7 +168,7 @@
 
   <ul>
     <li>caches fetched session data at <code>~/.punchlist-mcp/cache</code>;</li>
-    <li>stores pairing tokens in plaintext (with owner-only 0600 file permissions) at <code>~/.punchlist-mcp/config.json</code>.</li>
+    <li>stores its secrets (device pairing tokens and, if you use it, the iCloud web-authentication token) in the <strong>macOS login Keychain</strong> (service <code>punchlist-mcp</code>), with <code>~/.punchlist-mcp/config.json</code> holding only references to the Keychain entries; on other platforms and in headless/remote environments, where no Keychain is available, secrets fall back to plaintext storage in <code>config.json</code> with owner-only (0600) file permissions. Existing plaintext configurations are migrated to the Keychain automatically on first load on macOS.</li>
   </ul>
 
   <p>It also offers a user-initiated <code>export_icloud_credentials</code> tool that obtains a CloudKit Web Services web-authentication token via Apple ID sign-in in your browser and prints it as environment variables so you can use it in a remote, headless, or CI environment. <strong>Treat that token like your password.</strong> It is a web-authentication token tied to your Apple ID's CloudKit web session — treat it as granting whatever access that session grants, not merely access to this App's data — and anyone who has it can, at minimum, read the sessions you have synced. Only export it deliberately, only paste it into environments you trust, and revoke it when you are done: sign out of the associated iCloud web session, or rotate your Apple ID sessions (for example, by changing your Apple ID password), to invalidate it.</p>
@@ -205,7 +205,7 @@
 
   <p>In addition to these custom events, <strong>Firebase automatically collects standard events and telemetry</strong> — such as <code>first_open</code>, <code>session_start</code>, and <code>screen_view</code>, along with an app-instance identifier and device/usage metadata — as described in Google's privacy documentation (Section 6).</p>
 
-  <p><strong>You can turn all of this off.</strong> Settings includes a "<strong>Share anonymous usage &amp; crash reports</strong>" toggle (on by default); turning it off immediately stops both Firebase Analytics and Crashlytics collection (Section 7).</p>
+  <p><strong>This is your choice.</strong> In the <strong>EEA and UK</strong>, analytics and crash sharing is <strong>off by default</strong> and only ever starts if you opt in (during onboarding or later in Settings). <strong>Everywhere else</strong>, it is on by default and Settings includes a "<strong>Share anonymous usage &amp; crash reports</strong>" toggle; turning it off immediately stops both Firebase Analytics and Crashlytics collection. Details in Section 7.</p>
 
   <p><strong>No screenshot, transcript, video, or audio content is ever included in analytics events.</strong> Crashlytics sends crash stack traces and device metadata (device model, OS version, app version, and similar diagnostics) to Google when the App crashes. A Google ads-related SDK component is present transitively via Firebase, but advertising features are disabled: the App shows no ads, requests no App Tracking Transparency permission, and does no cross-app tracking.</p>
 
@@ -261,10 +261,18 @@
   <ul>
     <li><strong>Your recordings and session content:</strong> processed by software running on <strong>your</strong> device and moved only to destinations you own, at your instruction. To the extent this involves us at all, the basis is <strong>performance of a contract</strong> (providing the App you asked for); in substance, you — not we — hold this data.</li>
     <li><strong>Optional iCloud sync and local-network transfer:</strong> <strong>consent</strong>, given by your affirmative act of enabling each feature (both are off by default), withdrawable at any time by turning the feature off (turning off iCloud sync will also delete the App's data from your iCloud database).</li>
-    <li><strong>Analytics and crash reporting (Section 4.7):</strong> our <strong>legitimate interests</strong> in understanding aggregate usage and fixing crashes in a free indie app, balanced by strict data minimization (no content, no advertising identifiers, no cross-app tracking) and by <strong>your choice</strong>: an in-app opt-out you can exercise at any time, described below.</li>
+    <li><strong>Analytics and crash reporting (Section 4.7) — in the EEA and UK: your consent.</strong> If your device's region is in the European Economic Area or the United Kingdom, analytics and crash sharing is <strong>off by default</strong> and is enabled only if you opt in. You can withdraw consent at any time by turning it off in Settings.</li>
+    <li><strong>Analytics and crash reporting — elsewhere:</strong> our <strong>legitimate interests</strong> in understanding aggregate usage and fixing crashes in a free indie app, balanced by strict data minimization (no content, no advertising identifiers, no cross-app tracking) and by an <strong>opt-out</strong> you can exercise at any time.</li>
   </ul>
 
-  <p><strong>Your analytics choice:</strong> Settings includes a "<strong>Share anonymous usage &amp; crash reports</strong>" toggle, which is <strong>on by default</strong>. Turning it off <strong>immediately stops</strong> both Firebase Analytics and Crashlytics collection; turning it back on re-enables them. Under the hood, collection is disabled at app launch (via configuration keys) until the App applies your stored choice, so data is not collected contrary to your setting. If you opt out, you can also ask us to have Google delete the analytics data already associated with your app instance (Section 8).</p>
+  <p><strong>Your analytics choice, region by region:</strong></p>
+
+  <ul>
+    <li><strong>EEA and UK (opt-in):</strong> on first launch, the onboarding screen offers an optional "<strong>Share anonymous usage &amp; crash reports</strong>" toggle, <strong>off by default</strong>, with the note "Optional — helps fix bugs. Never includes your recordings or transcripts. Change anytime in Settings." Nothing is sent to Firebase — not even the automatic <code>first_open</code> event — unless and until you turn it on. Your region is determined from your device's locale region setting (EU member states plus Iceland, Liechtenstein, Norway, and the United Kingdom).</li>
+    <li><strong>Everywhere else (opt-out):</strong> sharing is <strong>on by default</strong>, with no onboarding prompt; the same "<strong>Share anonymous usage &amp; crash reports</strong>" toggle is in <strong>Settings &gt; Privacy</strong>.</li>
+  </ul>
+
+  <p>In both cases: turning the toggle off <strong>immediately stops</strong> both Firebase Analytics and Crashlytics collection, and turning it on re-enables them. Under the hood, collection is disabled at app launch (via configuration keys) until the App applies your stored choice, so data is never collected contrary to your setting; your choice is made once and is not reset by app updates. If you stop sharing, you can also ask us to have Google delete the analytics data already associated with your app instance (Section 8).</p>
 
   <h2 id="s8">8. Data Retention and Deletion</h2>
 
@@ -298,7 +306,7 @@
   <ul>
     <li><strong>Local network transfer:</strong> TLS-only in-app server (it refuses to start without a TLS identity), a P-256 identity stored in the iOS Keychain, certificate pinning established at pairing (trust-on-first-use — so the first pairing should be done on a network you trust), 6-digit pairing codes exchanged for 32-byte bearer tokens, HMAC-signed requests with replay (nonce) protection, and throttling against pairing brute-force attempts.</li>
     <li><strong>On device:</strong> iOS's built-in file protection encrypts session data at rest; the App does not implement an additional passphrase layer.</li>
-    <li><strong>On your computer:</strong> <code>punchlist-mcp</code> stores tokens in a file readable only by your user account (0600), but in plaintext — protect your computer account accordingly, and treat exported iCloud web-auth tokens like passwords (Section 4.5).</li>
+    <li><strong>On your computer:</strong> on macOS, <code>punchlist-mcp</code> stores pairing tokens and iCloud web-auth tokens in your login Keychain (service <code>punchlist-mcp</code>); on other platforms and in headless/remote environments it falls back to a plaintext file readable only by your user account (0600) — protect those environments accordingly. The credential-export tool shows a security warning with revocation guidance at export time; treat exported iCloud web-auth tokens like passwords (Section 4.5).</li>
   </ul>
 
   <p>No system is perfectly secure; the design goal is that even a breach of DoMore Tech could not expose your recordings, because we never have them.</p>
