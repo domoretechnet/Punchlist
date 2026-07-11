@@ -280,7 +280,7 @@
     <li><strong>On your device:</strong> sessions are kept until you delete them in the App; deleting a session removes its entire folder, including raw audio.</li>
     <li><strong>Your iCloud database:</strong> synced sessions are kept until you delete the session (deletion propagates to iCloud, queued if you are offline) or disable cloud sync (which <strong>will delete</strong> the App's entire iCloud zone). Deleting the App's iCloud data is also possible through Apple's iCloud storage management.</li>
     <li><strong>Copies on your computers and remote environments:</strong> managed by you. Deleting a session on the phone, or disabling cloud sync, does not — and cannot — delete copies already fetched by <code>punchlist-mcp</code> (e.g., <code>~/.punchlist-mcp/cache</code>) or shared with third parties such as LLM providers. Neither we nor the App can reach those copies; only you can delete them, where you put them.</li>
-    <li><strong>Analytics and crash data:</strong> retained by Google Firebase per its retention settings — Firebase Analytics retains identifier-associated event data for at most 14 months (configurable to as little as 2 months) — and then deleted or aggregated; we do not maintain a separate copy.</li>
+    <li><strong>Analytics and crash data:</strong> retained by Google Firebase — our Firebase Analytics retention setting is <strong>14 months</strong> for identifier-associated event data, after which it is deleted or aggregated; we do not maintain a separate copy.</li>
   </ul>
 
   <h2 id="s9">9. Recordings May Capture Other People (Incidental Third-Party Data)</h2>
