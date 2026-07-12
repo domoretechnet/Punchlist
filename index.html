@@ -347,7 +347,7 @@
   /* ── Footer ──────────────────────────────────────────── */
   footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
     font-size: 14px; color: var(--muted); text-align: center; }
-  footer .fine { display: block; margin-top: 6px; font-size: 11px; opacity: 0.8; }
+  footer .fine { display: block; margin-top: 6px; font-size: 9px; line-height: 1.35; opacity: 0.4; }
   footer .foot-links { display: block; margin-top: 14px; font-size: 13px; font-weight: 500; }
   footer .foot-links a { color: var(--muted); }
   footer .foot-links a:hover { color: var(--accent); }
@@ -629,7 +629,10 @@
   }
   function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
   nodes.forEach(function (n) {
-    n.addEventListener("click", function () { stopAuto(); paint(+n.getAttribute("data-i")); });
+    n.addEventListener("click", function () {
+      if (n.classList.contains("install-node")) { window.location.href = "coming-soon.html"; return; }
+      stopAuto(); paint(+n.getAttribute("data-i"));
+    });
   });
   paint(0);
 
