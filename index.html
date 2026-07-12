@@ -397,7 +397,7 @@
     .tl-sub { display: none; }
     .moments { grid-template-columns: 1fr; row-gap: 46px; margin-top: 34px; position: relative; }
     /* dotted line drops from the icon (left) down past the cards */
-    .moments::before { content: ""; position: absolute; left: 28px; top: 0; bottom: 24px;
+    .moments::before { content: ""; position: absolute; left: 33px; top: 0; bottom: 24px;
       border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
       z-index: 0; opacity: 0; transition: opacity .6s ease; }
     body.moments-live .moments::before { opacity: 1; }
@@ -583,7 +583,7 @@
             <rect class="b" x="18.9" y="8" width="2.2" height="8" rx="1.1"/>
           </svg>
         </span>
-        <p>Capture what you&rsquo;re thinking now, let your brain stand still. Punchlist keeps each thought connected to the screen where it began, ready for your agent when you&rsquo;re back at your keyboard.</p>
+        <p>Capture what you&rsquo;re thinking&mdash;anytime, anywhere. Punchlist saves your sessions so your agent can process them when you&rsquo;re back at your keyboard.</p>
       </div>
     </section>
 
@@ -917,7 +917,7 @@
     if (r.top < (window.innerHeight || 800) * 0.82 && r.bottom > 0) {
       momentsRevealed = true;
       var readDelay = reduce ? 0 : 1700;
-      var step = reduce ? 0 : 1300;
+      var step = reduce ? 0 : 2600;
       setTimeout(function () { document.body.classList.add("moments-live"); }, readDelay);
       momentEls.forEach(function (m, k) { setTimeout(function () { m.classList.add("in"); }, readDelay + k * step); });
     }
