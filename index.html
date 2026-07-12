@@ -255,11 +255,18 @@
     background: var(--accent); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
 
   /* ── Pitch band ─────────────────────────────── */
-  .pitch { margin-top: 66px; max-width: 660px; }
+  .pitch { position: relative; margin-top: 66px; max-width: 660px; }
   .pitch .kicker { display: inline-block; font: 600 12px/1 var(--mono); letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-  .pitch h2 { font-size: 30px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.16; color: var(--text); }
-  .pitch p { margin-top: 14px; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 58ch; }
+  .pitch h2 { position: relative; font-size: 30px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.16; color: var(--text); }
+  .pitch h2::after { content: attr(data-text); position: absolute; inset: 0; color: transparent; pointer-events: none;
+    text-shadow: 0 0 7px rgba(255,255,255,0.55), 0 0 15px rgba(255,255,255,0.3);
+    clip-path: inset(0 100% 0 0); }
+  .pitch.glow-in h2::after { clip-path: inset(0 0 0 0); }
+  @media (prefers-reduced-motion: no-preference) {
+    .pitch h2::after { transition: clip-path 4.8s cubic-bezier(.25,.1,.25,1); }
+  }
+  .pitch p { margin-top: 20px; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 58ch; }
   @media (max-width: 460px) { .pitch h2 { font-size: 24px; } }
 
   /* ── Capture-and-collect moments ───────────────── */
@@ -324,13 +331,18 @@
   @media (max-width: 800px) {
     h1 { font-size: 34px; }
     /* single-screen carousel: show only the active step's phone/terminal */
-    .previews { display: block; position: relative; min-height: 470px; }
+    .previews { display: block; position: relative; min-height: 505px; }
     .pv-card { display: none; min-height: 0; }
     .phone-card.on { display: flex; }
+    .phone { width: 210px; }
     .win-card.on { display: flex; min-height: 452px; max-width: 420px; margin: 0 auto; }
     .timeline { grid-template-columns: repeat(4, 1fr); }
     .tl-sub { display: none; }
-    .moments { grid-template-columns: 1fr; margin-top: 24px; }
+    .moments { grid-template-columns: 1fr; row-gap: 46px; margin-top: 34px; position: relative; }
+    .moments::before { content: ""; position: absolute; left: 50%; top: -34px; bottom: 20px;
+      border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
+      transform: translateX(-50%); z-index: 0; }
+    .moment { position: relative; z-index: 2; }
     .moment.lower { margin-top: 0; }
     .collect-head { padding-left: 0; align-items: center; }
     .collect-fan { display: none; }
@@ -340,8 +352,8 @@
     nav .word { display: none; }
     nav .links { gap: 10px; font-size: 13px; }
     .tl-title { font-size: 12px; }
-    .phone { width: 168px; }
-    .previews { min-height: 428px; }
+    .phone { width: 196px; }
+    .previews { min-height: 470px; }
     .win-card.on { min-height: 410px; }
   }
 
@@ -496,7 +508,7 @@
 
     <!-- Pitch: capture the idea the moment it lands -->
     <section class="pitch">
-      <h2>Make room for the next idea!</h2>
+      <h2 data-text="Make room for the next idea!">Make room for the next idea!</h2>
       <p>Capture what you&rsquo;re thinking now, then let your brain stand still. Punchlist keeps each thought connected to the screen where it began, ready for your agent when you&rsquo;re back at your keyboard.</p>
     </section>
 
@@ -706,6 +718,17 @@
     });
   }, { threshold: 0.2 });
   io.observe(document.querySelector(".previews"));
+
+  /* ── Pitch title white-glow sweep (left → right) ── */
+  var pitchSec = document.querySelector(".pitch");
+  if (pitchSec) {
+    var glowIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { pitchSec.classList.add("glow-in"); glowIO.disconnect(); }
+      });
+    }, { threshold: 0.6 });
+    glowIO.observe(pitchSec);
+  }
 })();
 </script>
 
