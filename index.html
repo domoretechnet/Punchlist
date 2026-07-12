@@ -6,6 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Punchlist — Talk over your apps. Ship the fixes.</title>
 <style>
+  @font-face {
+    font-family: 'Geist'; src: url('fonts/Geist-Variable.woff2') format('woff2');
+    font-weight: 100 900; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono'; src: url('fonts/GeistMono-Variable.woff2') format('woff2');
+    font-weight: 100 900; font-style: normal; font-display: swap;
+  }
   :root {
     color-scheme: light dark;
     --bg: #0A0A0C; --surface: #16161A; --border: #26262C;
@@ -13,7 +21,7 @@
     --accent: #2F7CF6; --code-bg: #131317;
     --stage: #08080A;
     --diff-add: #3FB950; --diff-del: #F85149; --punch: #FF453A;
-    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    --mono: 'Geist Mono', ui-monospace, "SF Mono", Menlo, monospace;
   }
   @media (prefers-color-scheme: light) {
     :root {
@@ -25,7 +33,7 @@
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font: 17px/1.6 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     background: var(--bg); color: var(--text); padding: 0 20px 72px;
     -webkit-font-smoothing: antialiased; overflow-x: hidden;
   }
