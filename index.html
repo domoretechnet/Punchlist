@@ -630,7 +630,10 @@
   function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
   nodes.forEach(function (n) {
     n.addEventListener("click", function () {
-      if (n.classList.contains("install-node")) { window.location.href = "coming-soon.html"; return; }
+      if (n.classList.contains("install-node")) {
+        if (n.classList.contains("on")) { window.location.href = "coming-soon.html"; return; }
+        stopAuto(); paint(3); return;
+      }
       stopAuto(); paint(+n.getAttribute("data-i"));
     });
   });
