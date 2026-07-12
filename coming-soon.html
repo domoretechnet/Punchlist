@@ -31,7 +31,7 @@
     background: radial-gradient(120% 95% at 50% 42%, rgba(47,124,246,0.10), transparent 60%), var(--bg); }
   #fx { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .vignette { position: absolute; inset: 0;
-    background: radial-gradient(125% 95% at 50% 40%, transparent 46%, rgba(0,0,0,0.6) 100%); }
+    background: radial-gradient(140% 120% at 50% 42%, transparent 20%, rgba(0,0,0,0.55) 100%); }
 
   /* ── Top bar ───────────────────────────────────────────── */
   .top { position: relative; z-index: 2; padding: 22px 24px; display: flex; align-items: center; gap: 10px; }
@@ -62,6 +62,23 @@
   .back svg { width: 14px; height: 14px; }
 
   /* ── Center stage ──────────────────────────────────────── */
+  .hero-mark {
+    width: 68px; height: 68px; border-radius: 17px; flex: none; margin: 0 auto 30px;
+    background: linear-gradient(160deg, #4A9BFF, #1E63E0);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 10px 34px rgba(47,124,246,0.45);
+    opacity: 0; transform: translateY(10px) scale(.94); animation: rise 1s ease .05s forwards;
+  }
+  .hero-mark svg { width: 38px; height: 38px; }
+  .hero-mark .b { transform-box: fill-box; transform-origin: center; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-mark .b { animation: eqbar 1050ms ease-in-out infinite; }
+    .hero-mark .b:nth-child(1) { animation-delay: 0ms; }
+    .hero-mark .b:nth-child(2) { animation-delay: 130ms; }
+    .hero-mark .b:nth-child(3) { animation-delay: 260ms; }
+    .hero-mark .b:nth-child(4) { animation-delay: 130ms; }
+    .hero-mark .b:nth-child(5) { animation-delay: 0ms; }
+  }
   .stage {
     position: relative; z-index: 2; flex: 1;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -135,13 +152,20 @@
     </span>
     <span class="word">Punchlist</span>
   </a>
-  <a class="back" href="landing.html">
+  <a class="back" href="index.html">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-    Back
+    Home
   </a>
 </header>
 
 <main class="stage">
+  <span class="hero-mark">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
+      <line class="b" x1="4" y1="10" x2="4" y2="14"/><line class="b" x1="8" y1="7" x2="8" y2="17"/>
+      <line class="b" x1="12" y1="4" x2="12" y2="20"/><line class="b" x1="16" y1="7" x2="16" y2="17"/>
+      <line class="b" x1="20" y1="10" x2="20" y2="14"/>
+    </svg>
+  </span>
   <span class="kicker">Punchlist · Beta</span>
   <div class="term" id="term"><span class="cur"></span></div>
   <h1 data-text="Coming soon.">Coming soon.</h1>
@@ -154,8 +178,8 @@
 </footer>
 
 <!-- ── Ominous fog background ──
-     Simplex noise GLSL below is the MIT-licensed webgl-noise by Ashima Arts / Stefan Gustavson
-     (github.com/ashima/webgl-noise, github.com/stegu/webgl-noise) — free for commercial use.
+     Simplex noise GLSL below is the MIT-licensed webgl-noise (Ashima Arts / Stefan Gustavson,
+     github.com/ashima/webgl-noise, github.com/stegu/webgl-noise) — free for commercial use.
      Everything else here is original. -->
 <script>
 (function () {
@@ -195,18 +219,15 @@
     "  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;",
     "  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));",
     "}",
-    // ── original fog composition ──
-    "float fbm(vec3 p){ float f=0.0,a=0.5; for(int i=0;i<5;i++){ f+=a*snoise(p); p*=2.02; a*=0.5; } return f; }",
+    // ── fog composition ──
+    "float fbm(vec3 p){ float f=0.0,a=0.5; for(int i=0;i<4;i++){ f+=a*snoise(p); p*=2.02; a*=0.5; } return f; }",
     "void main(){",
     "  vec2 uv=gl_FragCoord.xy/u_res.xy; vec2 p=uv; p.x*=u_res.x/u_res.y;",
     "  float t=u_time*0.028;",
     "  vec3 q=vec3(p*1.55,t);",
     "  float n=fbm(q+vec3(fbm(q+t)*0.55));",
     "  n=n*0.5+0.5;",
-    "  vec2 c=vec2(0.5*u_res.x/u_res.y,0.58);",
-    "  float d=distance(p,c);",
-    "  float focus=smoothstep(1.0,0.12,d);",
-    "  float glow=pow(clamp(n,0.0,1.0),1.7)*focus;",
+    "  float glow=pow(clamp(n,0.0,1.0),1.7);",
     "  vec3 bg=vec3(0.024,0.024,0.031);",
     "  vec3 deep=vec3(0.086,0.239,0.545);",
     "  vec3 blue=vec3(0.184,0.486,0.965);",
@@ -241,8 +262,9 @@
   var uTime = gl.getUniformLocation(prog, "u_time");
 
   function resize() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    var w = Math.floor(canvas.clientWidth * dpr), h = Math.floor(canvas.clientHeight * dpr);
+    var scale = 0.8; // render below native res; fog is soft so the upscale is invisible — big perf win
+    var w = Math.max(1, Math.floor(canvas.clientWidth * scale));
+    var h = Math.max(1, Math.floor(canvas.clientHeight * scale));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(uRes, canvas.width, canvas.height);
@@ -257,7 +279,13 @@
   if (reduce) {
     draw(9000); // one static, settled frame
   } else {
-    (function loop(ms) { resize(); draw(ms); requestAnimationFrame(loop); })(0);
+    var last = -999;
+    (function loop(ms) {
+      requestAnimationFrame(loop);
+      if (document.hidden) return;   // pause when tab is not visible
+      if (ms - last < 33) return;    // ~30fps cap
+      last = ms; resize(); draw(ms);
+    })(0);
   }
 })();
 </script>
