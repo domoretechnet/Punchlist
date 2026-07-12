@@ -137,7 +137,7 @@
   .tl-sub { font-size: 12px; line-height: 1.4; color: var(--muted); max-width: 22ch; }
 
   /* ── Preview windows ─────────────────────────────────── */
-  .previews { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: stretch; }
+  .previews { display: grid; grid-template-columns: 1fr 1fr 1.34fr 1fr; gap: 14px; align-items: stretch; }
   .pv-card {
     position: relative; border-radius: 18px; overflow: hidden; min-height: 432px;
     border: 1px solid var(--border); background: var(--stage);
@@ -267,15 +267,36 @@
     padding-right: 14px; font: 600 11px/1 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     letter-spacing: -0.1px; color: var(--muted);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .agent-body { position: relative; flex: 1; padding: 14px 14px; font: 10.5px/1.62 var(--mono); }
-  .term .line { opacity: 0; white-space: pre-wrap; overflow-wrap: anywhere; transition: opacity .18s ease; }
-  .term .line.in { opacity: 1; }
-  .term .p { color: var(--accent); }
+  .agent-body { position: relative; flex: 1; min-height: 0; padding: 0; font: 10.5px/1.62 var(--mono); }
+  .term { position: absolute; inset: 0; padding: 14px; overflow-y: auto; scrollbar-width: none; }
+  .term::-webkit-scrollbar { display: none; }
+  .term .line { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .term .u { color: var(--muted); }
   .term .c { color: var(--text); }
+  .term .bullet { color: color-mix(in srgb, var(--text) 60%, transparent); }
+  .term .tool { color: var(--text); }
   .term .dim { color: var(--muted); }
-  .term .add { color: var(--diff-add); }
-  .term .del { color: var(--diff-del); }
-  .term .ok { color: var(--diff-add); font-weight: 600; }
+  .term .faint { color: color-mix(in srgb, var(--muted) 58%, transparent); }
+  .term .glyph { color: var(--accent); }
+  .term .tcur { display: inline-block; width: 6px; height: 12px; margin-left: 1px;
+    background: var(--accent); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  .term .drow { display: block; }
+  .term .ctx { color: var(--muted); }
+  .term .ln { display: inline-block; min-width: 18px; margin-right: 8px; text-align: right;
+    color: color-mix(in srgb, var(--muted) 60%, transparent); }
+  .term .del { color: color-mix(in srgb, var(--diff-del) 80%, var(--text));
+    background: color-mix(in srgb, var(--diff-del) 15%, transparent); }
+  .term .add { color: color-mix(in srgb, var(--diff-add) 80%, var(--text));
+    background: color-mix(in srgb, var(--diff-add) 15%, transparent); }
+  .term .ok { color: color-mix(in srgb, var(--diff-add) 78%, var(--text)); }
+  .term .perm { border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; margin: 6px 0;
+    background: color-mix(in srgb, var(--surface) 55%, transparent); }
+  .term .perm .ptitle { display: block; color: var(--muted); }
+  .term .perm .pfile { display: block; color: var(--text); margin-bottom: 6px; }
+  .term .perm .pspace { display: block; height: 6px; }
+  .term .perm .q { display: block; color: var(--text); margin-bottom: 5px; }
+  .term .perm .o { display: block; color: var(--muted); padding: 1px 5px; border-radius: 4px; }
+  .term .perm .o.sel { color: var(--text); background: color-mix(in srgb, var(--accent) 16%, transparent); }
   .agent-wait { position: absolute; inset: 0; display: flex; flex-direction: column;
     align-items: flex-start; justify-content: center; gap: 8px; padding: 16px 16px;
     background: radial-gradient(circle at 50% 30%, rgba(47,124,246,.07), transparent 46%), var(--stage);
@@ -496,24 +517,10 @@
       <div class="pv-card win-card" data-i="2">
         <div class="pv-top">
           <span class="dot3" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></span>
-          <span class="win-title">~/your-repo — claude</span>
+          <span class="win-title">~/waypoint — claude</span>
         </div>
         <div class="agent-body">
-          <div class="term" id="term">
-            <div class="line"><span class="p">&gt;</span> <span class="c">work through my latest punchlist</span></div>
-            <div class="line"><span class="dim">&nbsp;&nbsp;fetch_punchlist &rarr; </span><span class="c">K7Q2X</span></div>
-            <div class="line"><span class="dim">&nbsp;&nbsp;opened </span><span class="c">RouteMapView.swift</span></div>
-            <div class="line">&nbsp;</div>
-            <div class="line"><span class="del">- desiredAccuracy = kCLLocationAccuracyKilometer</span></div>
-            <div class="line"><span class="add">+ desiredAccuracy = kCLLocationAccuracyBest</span></div>
-            <div class="line"><span class="dim">&nbsp;&nbsp;&hellip; DirectionsSheet, FlyoverMenu</span></div>
-            <div class="line">&nbsp;</div>
-            <div class="line"><span class="ok">&#10003; 3 fixes committed</span></div>
-          </div>
-          <div class="agent-wait" id="agentWait">
-            <span>waiting for your next punchlist</span>
-            <span class="prompt">&gt;<span class="cur"></span></span>
-          </div>
+          <div class="term" id="term"></div>
         </div>
       </div>
 
@@ -729,17 +736,85 @@
     await wait(2800);
   }
 
-  /* ── 3 · Agent animation ── */
-  var termLines = Array.prototype.slice.call(document.querySelectorAll("#term .line"));
-  var agentWait = document.getElementById("agentWait");
+  /* ── 4 · Agent terminal — realistic Claude Code session ── */
+  var term = document.getElementById("term");
+  function termLine(html, cls) {
+    var d = document.createElement("div");
+    d.className = "line" + (cls ? " " + cls : "");
+    d.innerHTML = html;
+    term.appendChild(d);
+    term.scrollTop = term.scrollHeight;
+    return d;
+  }
+  async function typeCmd(el, text) {
+    for (var i = 0; i <= text.length; i++) {
+      el.innerHTML = '<span class="u">&gt;</span> <span class="c">' + text.slice(0, i) + '</span><span class="tcur"></span>';
+      term.scrollTop = term.scrollHeight;
+      await wait(42);
+    }
+    el.innerHTML = '<span class="u">&gt;</span> <span class="c">' + text + '</span>';
+  }
+  var SPIN = ["\u2733","\u2738","\u2734","\u2731","\u273d","\u2739"];
+  async function think(word, ms) {
+    var line = termLine("");
+    var t0 = Date.now(), gi = 0;
+    function frame() {
+      var s = Math.max(1, Math.round((Date.now() - t0) / 1000));
+      line.innerHTML = '<span class="glyph">' + SPIN[gi % SPIN.length] + '</span> <span class="dim">' + word + '\u2026</span> <span class="faint">(' + s + 's \u00b7 esc to interrupt)</span>';
+      gi++;
+    }
+    frame();
+    var iv = setInterval(frame, 120);
+    await wait(ms);
+    clearInterval(iv);
+    line.remove();
+  }
+  var DIFF =
+    '<span class="drow ctx"><span class="ln">11</span>  private func configure() {</span>' +
+    '<span class="drow del"><span class="ln">12</span>- manager.desiredAccuracy = kCLLocationAccuracyKilometer</span>' +
+    '<span class="drow add"><span class="ln">12</span>+ manager.desiredAccuracy = kCLLocationAccuracyBest</span>' +
+    '<span class="drow ctx"><span class="ln">13</span>  }</span>';
+  async function permissionEdit(file) {
+    var p = termLine(
+      '<span class="ptitle">Edit file</span>' +
+      '<span class="pfile">' + file + '</span>' +
+      DIFF +
+      '<span class="pspace"></span>' +
+      '<span class="q">Do you want to make this edit to ' + file + '?</span>' +
+      '<span class="o sel">\u276f 1. Yes</span>' +
+      '<span class="o">&nbsp;&nbsp;2. Yes, allow all edits this session</span>' +
+      '<span class="o">&nbsp;&nbsp;3. No, and tell Claude what to do (esc)</span>', "perm");
+    await wait(3200);
+    p.remove();
+    termLine('<span class="dim">&nbsp;&nbsp;&#9151;&nbsp;Updated ' + file + ' with 1 addition and 1 removal</span>');
+  }
   async function agentOnce() {
-    if (reduce) { termLines.forEach(function (l) { l.classList.add("in"); }); return; }
-    termLines.forEach(function (l) { l.classList.remove("in"); });
-    agentWait.classList.add("show");
-    await wait(2000);
-    agentWait.classList.remove("show");
-    for (var i = 0; i < termLines.length; i++) { await wait(i === 0 ? 500 : 360); termLines[i].classList.add("in"); }
-    await wait(3400);
+    term.innerHTML = "";
+    if (reduce) {
+      termLine('<span class="u">&gt;</span> <span class="c">pull my sessions using punchlist</span>');
+      termLine('<span class="bullet">&#9210;</span> <span class="tool">Pulled session K7Q2X — 3 notes. Fixed GPS accuracy, sheet height, flyover menu.</span>');
+      termLine('<span class="dim">&nbsp;&nbsp;&#9151;&nbsp;3 files changed</span>');
+      return;
+    }
+    var cmd = termLine("");
+    await wait(450);
+    await typeCmd(cmd, "pull my sessions using punchlist");
+    await wait(550);
+    await think("Divining", 2100);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Pulled session K7Q2X — 3 punchlist notes. Reading the map view.</span>'); await wait(750);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Read</span><span class="dim">(RouteMapView.swift)</span>'); await wait(340);
+    termLine('<span class="dim">&nbsp;&nbsp;&#9151;&nbsp;Read 214 lines</span>'); await wait(700);
+    await think("Investigating", 1800);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Location accuracy is set to kilometer precision — that’s the “GPS in the river” bug. Fixing it:</span>'); await wait(800);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Update</span><span class="dim">(RouteMapView.swift)</span>'); await wait(420);
+    await permissionEdit("RouteMapView.swift");
+    await wait(950);
+    await think("Wrangling", 1600);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Also fixed the directions-sheet height and hid the flyover menu.</span>'); await wait(750);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Bash</span><span class="dim">(git commit -am "fix map punchlist")</span>'); await wait(340);
+    termLine('<span class="dim">&nbsp;&nbsp;&#9151;&nbsp;3 files changed, 6 insertions(+), 3 deletions(-)</span>'); await wait(700);
+    termLine('<span class="bullet">&#9210;</span> <span class="tool">Done — all 3 punchlist items shipped.</span>');
+    await wait(4200);
   }
 
   /* ── Orchestration ─────────────────────────────────────
@@ -779,17 +854,28 @@
 
   /* start when the hero is on screen */
   var started = false;
+  function begin() {
+    if (started) return;
+    started = true;
+    if (reduce) { players.forEach(function (p) { p(); }); paint(0); }
+    else if (isMobile) { runMobile(0); }
+    else { runDesktop(); }
+  }
+  var pv = document.querySelector(".previews");
   var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting && !started) {
-        started = true;
-        if (reduce) { players.forEach(function (p) { p(); }); paint(0); }
-        else if (isMobile) { runMobile(0); }
-        else { runDesktop(); }
-      }
-    });
+    entries.forEach(function (e) { if (e.isIntersecting) begin(); });
   }, { threshold: 0.2 });
-  io.observe(document.querySelector(".previews"));
+  io.observe(pv);
+  // Fallback: start when the section is on screen even if IntersectionObserver never fires.
+  function checkVisible() {
+    if (started) return;
+    var r = pv.getBoundingClientRect();
+    if (r.top < (window.innerHeight || 800) * 0.85 && r.bottom > 0) begin();
+  }
+  window.addEventListener("scroll", checkVisible, { passive: true });
+  window.addEventListener("resize", checkVisible, { passive: true });
+  checkVisible();
+  setTimeout(begin, 2000);
 
   /* ── Pitch title white-glow sweep (left → right) ── */
   var pitchSec = document.querySelector(".pitch");
