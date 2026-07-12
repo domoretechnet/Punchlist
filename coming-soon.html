@@ -1,0 +1,286 @@
+<!-- @dsCard group="Pages" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Punchlist — Coming soon</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #060608; --surface: #16161A; --border: #26262C;
+    --text: #F5F5F7; --muted: #98989F;
+    --accent: #2F7CF6; --stage: #08080A;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh; display: flex; flex-direction: column;
+    position: relative; overflow-x: hidden;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: none; color: color-mix(in srgb, var(--accent) 80%, #fff); }
+
+  /* ── Ominous background: WebGL fog (MIT Ashima/stegu simplex noise). ──
+     GPU render + in-shader dither = no banding. CSS radial is the no-WebGL fallback. */
+  .bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    background: radial-gradient(120% 95% at 50% 42%, rgba(47,124,246,0.10), transparent 60%), var(--bg); }
+  #fx { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .vignette { position: absolute; inset: 0;
+    background: radial-gradient(125% 95% at 50% 40%, transparent 46%, rgba(0,0,0,0.6) 100%); }
+
+  /* ── Top bar ───────────────────────────────────────────── */
+  .top { position: relative; z-index: 2; padding: 22px 24px; display: flex; align-items: center; gap: 10px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); }
+  .mark {
+    width: 30px; height: 30px; border-radius: 8px; flex: none;
+    background: linear-gradient(160deg, #4A9BFF, #1E63E0);
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 6px 20px rgba(47,124,246,0.35);
+  }
+  .mark svg { width: 17px; height: 17px; }
+  .mark .b { transform-box: fill-box; transform-origin: center; }
+  @media (prefers-reduced-motion: no-preference) {
+    .mark .b { animation: eqbar 1050ms ease-in-out infinite; }
+    .mark .b:nth-child(1) { animation-delay: 0ms; }
+    .mark .b:nth-child(2) { animation-delay: 130ms; }
+    .mark .b:nth-child(3) { animation-delay: 260ms; }
+    .mark .b:nth-child(4) { animation-delay: 130ms; }
+    .mark .b:nth-child(5) { animation-delay: 0ms; }
+  }
+  @keyframes eqbar { 0%,100% { transform: scaleY(.5); } 50% { transform: scaleY(1); } }
+  .brand .word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; }
+  .back {
+    margin-left: auto; color: var(--muted); font-size: 14px; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 6px; transition: color .2s ease;
+  }
+  .back:hover { color: var(--text); }
+  .back svg { width: 14px; height: 14px; }
+
+  /* ── Center stage ──────────────────────────────────────── */
+  .stage {
+    position: relative; z-index: 2; flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 40px 24px 64px;
+  }
+  .kicker {
+    font: 600 12px/1 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap;
+    color: var(--accent); margin-bottom: 26px;
+    opacity: 0; transform: translateY(6px); animation: rise .8s ease .1s forwards;
+  }
+  .term {
+    font: 13px/1 var(--mono); color: var(--muted); margin-bottom: 30px;
+    min-height: 15px; letter-spacing: 0.02em;
+  }
+  .term .prompt { color: var(--accent); }
+  .cur {
+    display: inline-block; width: 7px; height: 15px; vertical-align: -2px;
+    background: var(--accent); margin-left: 3px;
+  }
+  @media (prefers-reduced-motion: no-preference) { .cur { animation: blink 1s steps(1) infinite; } }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  h1 {
+    position: relative; font-weight: 700; letter-spacing: -2px; line-height: 1.0;
+    font-size: clamp(52px, 12vw, 132px); color: var(--text);
+    opacity: 0; transform: translateY(10px); animation: rise 1s ease .25s forwards;
+  }
+  h1::after {
+    content: attr(data-text); position: absolute; inset: 0; color: transparent; pointer-events: none;
+    text-shadow: 0 0 12px rgba(255,255,255,0.5), 0 0 30px rgba(47,124,246,0.45);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    h1::after { animation: titlePulse 7s ease-in-out 1.1s infinite; }
+  }
+  @keyframes titlePulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+
+  /* ── Footer ────────────────────────────────────────────── */
+  footer {
+    position: relative; z-index: 2; text-align: center; padding: 26px 24px 34px;
+    border-top: 1px solid var(--border);
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer .fine { display: block; max-width: 620px; margin: 8px auto 0; font-size: 11px; color: color-mix(in srgb, var(--muted) 75%, transparent); line-height: 1.5; }
+  footer .foot-links { display: inline-block; margin-top: 10px; font-size: 12px; }
+  footer .foot-links a { color: var(--muted); }
+  footer .foot-links a:hover { color: var(--accent); }
+
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 460px) {
+    .top { padding: 16px 18px; }
+    h1 { letter-spacing: -1.2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <canvas id="fx"></canvas>
+  <div class="vignette"></div>
+</div>
+
+<header class="top">
+  <a class="brand" href="landing.html">
+    <span class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
+        <line class="b" x1="4" y1="10" x2="4" y2="14"/><line class="b" x1="8" y1="7" x2="8" y2="17"/>
+        <line class="b" x1="12" y1="4" x2="12" y2="20"/><line class="b" x1="16" y1="7" x2="16" y2="17"/>
+        <line class="b" x1="20" y1="10" x2="20" y2="14"/>
+      </svg>
+    </span>
+    <span class="word">Punchlist</span>
+  </a>
+  <a class="back" href="landing.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    Back
+  </a>
+</header>
+
+<main class="stage">
+  <span class="kicker">Punchlist · Beta</span>
+  <div class="term" id="term"><span class="cur"></span></div>
+  <h1 data-text="Coming soon.">Coming soon.</h1>
+</main>
+
+<footer>
+  <p>Punchlist &mdash; DoMore Tech LLC · TestFlight beta</p>
+  <span class="fine">On-device transcription, no account required. We use Firebase for anonymous usage analytics. Punchlist is an independent product of DoMore Tech LLC, not affiliated with or endorsed by Anthropic or Apple.</span>
+  <span class="foot-links"><a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms of Service</a></span>
+</footer>
+
+<!-- ── Ominous fog background ──
+     Simplex noise GLSL below is the MIT-licensed webgl-noise by Ashima Arts / Stefan Gustavson
+     (github.com/ashima/webgl-noise, github.com/stegu/webgl-noise) — free for commercial use.
+     Everything else here is original. -->
+<script>
+(function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var canvas = document.getElementById("fx");
+  var gl = null;
+  try { gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl"); } catch (e) {}
+  if (!gl) { canvas.style.display = "none"; return; } // CSS radial fallback shows
+
+  var vsrc = "attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }";
+  var fsrc = [
+    "precision highp float;",
+    "uniform vec2 u_res; uniform float u_time;",
+    // ── MIT webgl-noise (Ashima Arts / Stefan Gustavson) ──
+    "vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}",
+    "vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}",
+    "vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}",
+    "vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}",
+    "float snoise(vec3 v){",
+    "  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);",
+    "  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);",
+    "  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g;",
+    "  vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);",
+    "  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;",
+    "  i=mod289(i);",
+    "  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));",
+    "  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;",
+    "  vec4 j=p-49.0*floor(p*ns.z*ns.z);",
+    "  vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);",
+    "  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);",
+    "  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);",
+    "  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));",
+    "  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;",
+    "  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);",
+    "  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));",
+    "  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;",
+    "  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;",
+    "  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));",
+    "}",
+    // ── original fog composition ──
+    "float fbm(vec3 p){ float f=0.0,a=0.5; for(int i=0;i<5;i++){ f+=a*snoise(p); p*=2.02; a*=0.5; } return f; }",
+    "void main(){",
+    "  vec2 uv=gl_FragCoord.xy/u_res.xy; vec2 p=uv; p.x*=u_res.x/u_res.y;",
+    "  float t=u_time*0.028;",
+    "  vec3 q=vec3(p*1.55,t);",
+    "  float n=fbm(q+vec3(fbm(q+t)*0.55));",
+    "  n=n*0.5+0.5;",
+    "  vec2 c=vec2(0.5*u_res.x/u_res.y,0.58);",
+    "  float d=distance(p,c);",
+    "  float focus=smoothstep(1.0,0.12,d);",
+    "  float glow=pow(clamp(n,0.0,1.0),1.7)*focus;",
+    "  vec3 bg=vec3(0.024,0.024,0.031);",
+    "  vec3 deep=vec3(0.086,0.239,0.545);",
+    "  vec3 blue=vec3(0.184,0.486,0.965);",
+    "  vec3 col=bg;",
+    "  col=mix(col,deep,glow*0.5);",
+    "  col=mix(col,blue,pow(glow,2.3)*0.3);",
+    "  float dither=(fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453)-0.5)/255.0;",
+    "  col+=dither;",
+    "  gl_FragColor=vec4(col,1.0);",
+    "}"
+  ].join("\n");
+
+  function compile(type, src) {
+    var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+  var vs = compile(gl.VERTEX_SHADER, vsrc), fs = compile(gl.FRAGMENT_SHADER, fsrc);
+  if (!vs || !fs) { canvas.style.display = "none"; return; }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.style.display = "none"; return; }
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(prog, "a");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  var uRes = gl.getUniformLocation(prog, "u_res");
+  var uTime = gl.getUniformLocation(prog, "u_time");
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    var w = Math.floor(canvas.clientWidth * dpr), h = Math.floor(canvas.clientHeight * dpr);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function draw(ms) {
+    gl.uniform1f(uTime, ms * 0.001);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+  if (reduce) {
+    draw(9000); // one static, settled frame
+  } else {
+    (function loop(ms) { resize(); draw(ms); requestAnimationFrame(loop); })(0);
+  }
+})();
+</script>
+
+<script>
+(function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  var term = document.getElementById("term");
+  var msg = "the queue is forming";
+  async function typeLine() {
+    if (reduce) { term.innerHTML = '<span class="prompt">&gt;</span> ' + msg; return; }
+    await wait(650);
+    var built = '<span class="prompt">&gt;</span> ';
+    term.innerHTML = built + '<span class="cur"></span>';
+    for (var i = 0; i < msg.length; i++) {
+      await wait(52 + Math.random() * 46);
+      built += msg[i];
+      term.innerHTML = built + '<span class="cur"></span>';
+    }
+  }
+  typeLine();
+})();
+</script>
+</body>
+</html>
