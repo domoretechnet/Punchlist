@@ -379,6 +379,8 @@
     .moment.lower { margin-top: 0; }
     .collect-head { padding-left: 0; align-items: center; }
     .collect-fan { display: none; }
+    .pitch { margin-left: auto; margin-right: auto; text-align: center; }
+    .pitch p { margin-left: auto; margin-right: auto; }
   }
   @media (max-width: 460px) {
     h1 { font-size: 28px; }
@@ -616,6 +618,7 @@
 <script>
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var isMobile = matchMedia("(max-width: 800px)").matches;
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
   /* ── Timeline highlight (cumulative fill, auto-advance, click to lock) ── */
@@ -638,11 +641,12 @@
   function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
   nodes.forEach(function (n) {
     n.addEventListener("click", function () {
-      if (n.classList.contains("install-node")) {
-        if (n.classList.contains("on")) { window.location.href = "coming-soon.html"; return; }
-        stopAuto(); paint(3); return;
+      var i = +n.getAttribute("data-i");
+      if (n.classList.contains("install-node") && n.classList.contains("on")) {
+        window.location.href = "coming-soon.html"; return;
       }
-      stopAuto(); paint(+n.getAttribute("data-i"));
+      if (isMobile) { if (i !== active) lockMobile(i); }
+      else { stopAuto(); paint(i); }
     });
   });
   paint(0);
@@ -662,29 +666,25 @@
   var APP_STORE_URL = "coming-soon.html"; // GET opens the Coming Soon / beta waitlist screen
   if (APP_STORE_URL) iget.setAttribute("href", APP_STORE_URL);
   iget.addEventListener("click", function (e) { if (!APP_STORE_URL) e.preventDefault(); });
-  async function installLoop() {
+  async function installOnce() {
     if (reduce) { iapp.classList.add("installing"); setGetLabel("GET"); return; }
-    while (true) {
-      iget.classList.remove("downloading"); iapp.classList.remove("installing");
-      setGetLabel("GET");
-      await wait(1000);
-      iget.classList.add("tap"); await wait(180); iget.classList.remove("tap");
-      iget.classList.add("downloading"); iapp.classList.add("installing");
-      await wait(1800);
-    }
+    iget.classList.remove("downloading"); iapp.classList.remove("installing");
+    setGetLabel("GET");
+    await wait(1000);
+    iget.classList.add("tap"); await wait(180); iget.classList.remove("tap");
+    iget.classList.add("downloading"); iapp.classList.add("installing");
+    await wait(1800);
   }
 
   /* ── 2 · Start-a-session animation ── */
   var capBtn = document.getElementById("capBtn");
-  async function sessionLoop() {
+  async function sessionOnce() {
     if (reduce) return;
-    while (true) {
-      await wait(2400);
-      capBtn.classList.add("press");
-      await wait(650);
-      capBtn.classList.remove("press");
-      await wait(2400);
-    }
+    await wait(2400);
+    capBtn.classList.add("press");
+    await wait(650);
+    capBtn.classList.remove("press");
+    await wait(2400);
   }
 
   /* ── 3 · Talk animation ── */
@@ -709,39 +709,70 @@
       setCap(built, false, true);
     }
   }
-  async function talkLoop() {
+  async function talkOnce() {
     if (reduce) {
       rec.classList.remove("on");
       setCap('saved &mdash; K7Q2X', true, false);
       sess.classList.add("show"); return;
     }
-    while (true) {
-      sess.classList.remove("show");
-      setCap('<span class="cur"></span>', false, false);
-      await wait(700);
-      rec.classList.add("on");
-      for (var i = 0; i < gripes.length; i++) { await typeGripe(gripes[i]); await wait(1200); }
-      rec.classList.remove("on");
-      setCap('&#9632; transcribing on device&hellip;', true, false);
-      await wait(1600);
-      setCap('saved &mdash; sessions wait until you&rsquo;re ready', true, false);
-      sess.classList.add("show");
-      await wait(2800);
-    }
+    sess.classList.remove("show");
+    setCap('<span class="cur"></span>', false, false);
+    await wait(700);
+    rec.classList.add("on");
+    for (var i = 0; i < gripes.length; i++) { await typeGripe(gripes[i]); await wait(1200); }
+    rec.classList.remove("on");
+    setCap('&#9632; transcribing on device&hellip;', true, false);
+    await wait(1600);
+    setCap('saved &mdash; sessions wait until you&rsquo;re ready', true, false);
+    sess.classList.add("show");
+    await wait(2800);
   }
 
   /* ── 3 · Agent animation ── */
   var termLines = Array.prototype.slice.call(document.querySelectorAll("#term .line"));
   var agentWait = document.getElementById("agentWait");
-  async function agentLoop() {
+  async function agentOnce() {
     if (reduce) { termLines.forEach(function (l) { l.classList.add("in"); }); return; }
-    while (true) {
-      termLines.forEach(function (l) { l.classList.remove("in"); });
-      agentWait.classList.add("show");
-      await wait(2000);
-      agentWait.classList.remove("show");
-      for (var i = 0; i < termLines.length; i++) { await wait(i === 0 ? 500 : 360); termLines[i].classList.add("in"); }
-      await wait(3400);
+    termLines.forEach(function (l) { l.classList.remove("in"); });
+    agentWait.classList.add("show");
+    await wait(2000);
+    agentWait.classList.remove("show");
+    for (var i = 0; i < termLines.length; i++) { await wait(i === 0 ? 500 : 360); termLines[i].classList.add("in"); }
+    await wait(3400);
+  }
+
+  /* ── Orchestration ─────────────────────────────────────
+     Desktop: all four previews are on screen at once, so every
+     animation loops in parallel and the timeline highlight just
+     sweeps across them on a timer.
+     Mobile: only the ACTIVE preview is shown (single-screen
+     carousel), so we DRIVE the sequence — paint a step, play its
+     animation to completion, THEN advance. That guarantees step 2's
+     dictation finishes typing before we move to the next preview. */
+  var players = [sessionOnce, talkOnce, agentOnce, installOnce];
+  var driveGen = 0;
+
+  function runDesktop() {
+    startAuto();
+    players.forEach(function (p) { (async function loop() { while (true) { await p(); } })(); });
+  }
+  async function runMobile(i) {
+    var myGen = ++driveGen;
+    while (myGen === driveGen) {
+      paint(i);
+      await players[i]();
+      if (myGen !== driveGen) return;   // superseded by a tap
+      await wait(650);
+      i = (i + 1) % players.length;
+    }
+  }
+  async function lockMobile(i) {          // tap a step to lock onto it
+    var myGen = ++driveGen;               // cancels the auto driver
+    paint(i);
+    while (myGen === driveGen) {
+      await players[i]();
+      if (myGen !== driveGen) return;
+      await wait(650);
     }
   }
 
@@ -751,7 +782,9 @@
     entries.forEach(function (e) {
       if (e.isIntersecting && !started) {
         started = true;
-        startAuto(); installLoop(); sessionLoop(); talkLoop(); agentLoop();
+        if (reduce) { players.forEach(function (p) { p(); }); paint(0); }
+        else if (isMobile) { runMobile(0); }
+        else { runDesktop(); }
       }
     });
   }, { threshold: 0.2 });

@@ -123,17 +123,6 @@
   }
   @keyframes titlePulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
 
-  /* ── Footer ────────────────────────────────────────────── */
-  footer {
-    position: relative; z-index: 2; text-align: center; padding: 26px 24px 34px;
-    border-top: 1px solid var(--border); background: #0A0A0C;
-  }
-  footer p { font-size: 13px; color: var(--muted); }
-  footer .fine { display: block; margin: 8px 0 0; font-size: 9px; line-height: 1.35; color: var(--muted); opacity: 0.4; }
-  footer .foot-links { display: inline-block; margin-top: 10px; font-size: 12px; }
-  footer .foot-links a { color: var(--muted); }
-  footer .foot-links a:hover { color: var(--accent); }
-
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
 
   @media (max-width: 460px) {
@@ -178,12 +167,6 @@
   <div class="term" id="term"><span class="cur"></span></div>
   <h1 data-text="Coming soon.">Coming soon.</h1>
 </main>
-
-<footer>
-  <p>Punchlist &mdash; DoMore Tech LLC · TestFlight beta</p>
-  <span class="fine">Punchlist is an independent product of DoMore Tech LLC, not affiliated with or endorsed by Anthropic or Apple.</span>
-  <span class="foot-links"><a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms of Service</a></span>
-</footer>
 
 <!-- ── Ominous fog background ──
      Simplex noise GLSL below is the MIT-licensed webgl-noise by Ashima Arts / Stefan Gustavson
