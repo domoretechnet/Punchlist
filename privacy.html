@@ -5,118 +5,368 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="robots" content="all">
 <title>Privacy Policy — Punchlist</title>
+<meta name="description" content="Privacy Policy for the Punchlist iOS app and the punchlist-mcp companion package by DoMore Tech LLC.">
 <style>
   :root {
     color-scheme: light dark;
     --bg: #0A0A0C; --surface: #16161A; --border: #26262C;
-    --text: #F5F5F7; --muted: #98989F; --accent: #2F7CF6;
+    --text: #F5F5F7; --muted: #98989F;
+    --accent: #2F7CF6; --code-bg: #131317;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg: #FFFFFF; --surface: #F5F5F7; --border: #E5E5EA; --text: #1D1D1F; --muted: #6E6E73; }
+    :root {
+      --bg: #FFFFFF; --surface: #F5F5F7; --border: #E5E5EA;
+      --text: #1D1D1F; --muted: #6E6E73; --code-bg: #F0F0F3;
+    }
   }
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   body {
     font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    background: var(--bg); color: var(--text); padding: 0 20px 80px;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--text); padding: 0 20px 72px;
   }
+  main { max-width: 70ch; margin: 0 auto; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
   nav {
-    position: sticky; top: 0; z-index: 30; margin: 0 -20px; padding: 14px 20px;
-    display: flex; align-items: center; gap: 10px;
+    position: sticky; top: 0; z-index: 10;
+    margin: 0 -20px; padding: 14px 20px;
     background: color-mix(in srgb, var(--bg) 78%, transparent);
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-  nav .inner { max-width: 760px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; }
+  nav .inner { max-width: 70ch; margin: 0 auto; display: flex; align-items: center; gap: 10px; }
   nav .mark {
     width: 26px; height: 26px; border-radius: 7px;
     background: linear-gradient(160deg, #4A9BFF, #1E63E0);
     display: inline-flex; align-items: center; justify-content: center;
   }
   nav .mark svg { width: 15px; height: 15px; }
-  nav a.word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; color: var(--text); }
-  nav a.word:hover { text-decoration: none; }
-  nav .back { margin-left: auto; font-size: 15px; font-weight: 500; color: var(--muted); }
-  nav .back:hover { color: var(--accent); text-decoration: none; }
+  nav .word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; }
+  nav a.home { color: var(--text); display: flex; align-items: center; gap: 10px; }
+  nav a.home:hover { text-decoration: none; }
+  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 15px; font-weight: 500; }
+  nav .links a { color: var(--muted); }
+  nav .links a:hover { color: var(--accent); text-decoration: none; }
 
-  main { max-width: 760px; margin: 0 auto; }
+  header.doc { padding: 52px 0 8px; }
+  h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.18; }
+  .updated { margin-top: 12px; font-weight: 600; }
+  .doc-links { margin-top: 8px; font-size: 15px; color: var(--muted); }
 
-  .placeholder {
-    margin: 32px 0 40px; padding: 12px 16px; border-radius: 10px;
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
-    font-size: 13.5px; color: var(--text);
+  h2 { font-size: 23px; font-weight: 700; letter-spacing: -0.3px; margin: 44px 0 14px; line-height: 1.25; }
+  h3 { font-size: 18px; font-weight: 650; margin: 30px 0 10px; }
+  p { margin: 0 0 16px; }
+  ol, ul { margin: 0 0 16px; padding-left: 26px; }
+  li { margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+  strong { font-weight: 650; }
+  code {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1px 6px; font-size: 14.5px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
   }
-  h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.6px; margin: 56px 0 6px; }
-  .updated { color: var(--muted); font-size: 14px; }
-  h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.2px; margin: 40px 0 10px; }
-  p { color: var(--muted); margin: 0 0 14px; max-width: 68ch; }
-  p.lead { color: var(--text); }
-  ul { color: var(--muted); margin: 0 0 14px; padding-left: 22px; }
-  li { margin: 4px 0; }
-  .contact { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--border);
-             font-size: 14px; color: var(--muted); }
+
+  .table-wrap { overflow-x: auto; margin: 0 0 16px; border: 1px solid var(--border); border-radius: 12px; }
+  table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--surface); font-weight: 650; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+
+  footer {
+    margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
+    font-size: 14px; color: var(--muted); text-align: center;
+  }
 </style>
 </head>
 <body>
 <nav>
   <div class="inner">
-    <a class="mark" href="landing.html" aria-label="Punchlist home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
-        <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
-        <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
-        <line x1="20" y1="10" x2="20" y2="14"/>
-      </svg>
+    <a class="home" href="landing.html">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
+          <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
+          <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
+          <line x1="20" y1="10" x2="20" y2="14"/>
+        </svg>
+      </span>
+      <span class="word">Punchlist</span>
     </a>
-    <a class="word" href="landing.html">Punchlist</a>
-    <a class="back" href="landing.html">&larr; Back to home</a>
+    <span class="links"><a href="landing.html">Home</a><a href="terms.html">Terms of Service</a></span>
   </div>
 </nav>
-
 <main>
-  <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: [DATE] &middot; DoMore Tech LLC</p>
+  <header class="doc">
+    <h1>Punchlist Privacy Policy</h1>
+    <p class="updated">Last Updated: July 12, 2026</p>
+    <p class="doc-links">See also: <a href="terms.html">Terms of Service</a></p>
+  </header>
 
-  <div class="placeholder">
-    <strong>Placeholder.</strong> This is a scaffold for the real Privacy Policy. Replace the bracketed
-    text and section bodies with reviewed legal copy before launch.
-  </div>
+  <p>This Privacy Policy explains how the <strong>Punchlist</strong> iOS app (<code>com.domoretech.punchlist</code>, the "<strong>App</strong>") and its open-source companion package <strong><code>punchlist-mcp</code></strong> handle information. It is provided by <strong>DoMore Tech LLC</strong> ("<strong>DoMore Tech</strong>," "<strong>we</strong>," "<strong>us</strong>"), the developer and publisher of the App and, where data-protection law uses the term, the "data controller" for the limited data described in Section 4.7 (analytics and crash reporting). Your use of the App is also governed by our <a href="terms.html">Terms of Service</a>.</p>
 
-  <p class="lead">This Privacy Policy explains how DoMore Tech LLC (&ldquo;Punchlist,&rdquo; &ldquo;we&rdquo;) handles information in connection with the Punchlist app and website.</p>
+  <h2 id="s1">1. The Short Version</h2>
 
-  <h2>1. Data that stays on your device</h2>
-  <p>Audio is transcribed on-device. Session recordings, transcripts, and screenshots remain on your phone unless you choose to send a session.</p>
-
-  <h2>2. Data you choose to send</h2>
-  <p>When you send a session to your coding agent, that session content is transferred over your own local network or your own private iCloud. [Describe exactly what is transmitted, to where, and for how long it is retained.]</p>
-
-  <h2>3. Analytics</h2>
-  <p>We use Firebase (a Google service) to collect anonymous usage and diagnostic analytics that help us improve the app. [List what Firebase collects, whether identifiers are used, and link to Google&rsquo;s privacy terms.]</p>
-
-  <h2>4. What we do not do</h2>
   <ul>
-    <li>No account is required to use Punchlist.</li>
-    <li>We do not sell your personal information.</li>
-    <li>[Add any other commitments here.]</li>
+    <li><strong>Your recordings stay in your hands.</strong> Screen recordings, screenshots, audio, and transcripts are created and stored <strong>on your device</strong>. If you turn on optional cloud sync, they go to <strong>your own private iCloud database</strong> — which we cannot access. If you pair a computer, they go to <strong>your own computer</strong> over your local network. <strong>DoMore Tech operates no server that receives your recordings, and we never see their contents.</strong></li>
+    <li><strong>Transcription happens on your device.</strong> Speech recognition uses Apple's on-device recognizer (with the on-device-only flag set) or an optional on-device whisper.cpp model. Your narration is not sent to us or to a speech-recognition cloud service by the App.</li>
+    <li><strong>We collect a small amount of anonymous-style usage and crash data</strong> through Google Firebase Analytics and Crashlytics (details, including the events we log, in Section 4.7). In the EEA and UK this is <strong>off unless you opt in</strong>; elsewhere it is on by default and you can turn it off at any time in Settings (Section 7). No screenshots, transcripts, or audio are ever included in analytics or crash reports.</li>
+    <li><strong>Tester feedback is the one exception.</strong> If a developer invites you as a tester for their app and you accept, the feedback sessions you record and choose to send go to <strong>that developer's</strong> iCloud — <strong>screenshots and the text transcript of your narration only, never your video or audio</strong>. You consent first, can review before sending, and can retract afterward; even then, <strong>DoMore Tech never receives them</strong>. See Section 4.9.</li>
+    <li><strong>No accounts. No ads. No tracking across apps. No sale of data. No IDFA.</strong></li>
   </ul>
 
-  <h2>5. Your choices &amp; rights</h2>
-  <p>[Describe how users can opt out of analytics, delete data, and any regional rights such as GDPR/CCPA.]</p>
+  <h2 id="s2">2. Scope</h2>
 
-  <h2>6. Children&rsquo;s privacy</h2>
-  <p>[Standard children&rsquo;s privacy statement.]</p>
+  <p>This policy covers the App and the <code>punchlist-mcp</code> package we publish. It does not cover third-party services you choose to use with your session data — in particular, any AI/LLM provider or coding assistant you feed your sessions to. Those services have their own privacy policies, and what you share with them is your decision and outside our control.</p>
 
-  <h2>7. Changes to this policy</h2>
-  <p>[How updates are communicated.]</p>
+  <h2 id="s3">3. How Punchlist Is Built (Architecture)</h2>
 
-  <div class="contact">
-    Questions about this policy? Contact us at <a href="mailto:privacy@example.com">privacy@example.com</a>. <!-- replace with real address -->
+  <p>Punchlist records your device's screen system-wide via an Apple ReplayKit broadcast extension while you narrate, transcribes your narration on-device, and produces a <strong>session bundle</strong> containing:</p>
+
+  <ul>
+    <li><code>manifest.json</code> — session metadata plus the <strong>full transcript text with word timestamps</strong>;</li>
+    <li>screenshot PNGs of detected screens;</li>
+    <li><code>recording.mp4</code> — the screen-recording video;</li>
+    <li><code>audio.m4a</code> — the raw microphone audio;</li>
+    <li>for crash-diagnostic sessions, a <code>crash_diagnostic.json</code> file.</li>
+  </ul>
+
+  <p>Because the recording is <strong>system-wide</strong>, a session can capture any app on your screen, notifications, audio from other apps, and anything your microphone hears — including other people. See Section 9 on incidental third-party data.</p>
+
+  <p>All of this is stored locally in the App's container on your device. It moves off your device <strong>only</strong> through opt-in channels: the two described in Sections 4.3 and 4.4, which deliver data to destinations <strong>you</strong> own and control, and — if you accept an invitation to be a tester for another developer's app — the tester-feedback channel described in Section 4.9, which delivers your feedback submission to that developer.</p>
+
+  <h2 id="s4">4. Data We Handle, Category by Category</h2>
+
+  <h3 id="s4-1">4.1 Recordings, screenshots, transcripts, and audio (your content)</h3>
+
+  <p>Created and stored <strong>on your device only</strong>, unless you enable an opt-in transfer channel below. DoMore Tech never receives this content. Raw microphone audio (<code>audio.m4a</code>) remains in the session folder on your device until you delete the session. The App does not create or retain any voiceprint or other biometric identifier; audio is processed only to produce a text transcript.</p>
+
+  <h3 id="s4-2">4.2 Local storage and deletion</h3>
+
+  <p>Sessions live in the App's private App Group container on your device, protected by iOS's default file protection (encrypted at rest by the operating system; the App does not add its own passphrase layer). Deleting a session in the App deletes its entire folder. If cloud sync is on, the deletion also deletes the corresponding record from your iCloud database (queued and retried if you are offline).</p>
+
+  <h3 id="s4-3">4.3 Optional iCloud sync (off by default)</h3>
+
+  <p>If you turn on cloud sync, the App uploads to the <strong>CloudKit private database in your own iCloud account</strong> (container <code>iCloud.com.domoretech.punchlist</code>):</p>
+
+  <ul>
+    <li>a zip of the session's <strong>screenshots</strong>;</li>
+    <li>the session's <strong><code>manifest.json</code>, which includes the full transcript text</strong>;</li>
+    <li>metadata: session ID, a random per-install 8-character device identifier, your device's marketing name (e.g., "iPhone 16 Pro"), app version, the name of the app the session is about, timestamps, and entry/size counts.</li>
+  </ul>
+
+  <p><strong>Video and raw audio are never uploaded to iCloud.</strong> Your private iCloud database is controlled by your Apple account; DoMore Tech has no ability to read its contents. Turning cloud sync off <strong>will delete</strong> the App's entire zone — all synced sessions — from your iCloud database. That deletion cannot reach copies already fetched to your computers or remote environments (Section 4.5); only you can delete those. iCloud is provided by Apple under Apple's privacy terms (Section 6).</p>
+
+  <h3 id="s4-4">4.4 Optional local-network transfer (off by default)</h3>
+
+  <p>You can pair the App with a computer you own on your local network. Pairing uses a 6-digit code exchanged for an access token over a TLS-encrypted connection (see Section 11 for security details). A paired computer can download the <strong>full session bundle</strong>, which — unlike iCloud sync — <strong>includes the raw microphone audio (<code>audio.m4a</code>)</strong> and any crash-diagnostic file.</p>
+
+  <p><strong>Plain statement about your audio:</strong> your narration <strong>audio recording</strong> never leaves your device, <strong>except</strong> when you yourself transfer a full session bundle over your local network to a computer you have paired. It is never sent to DoMore Tech or uploaded to iCloud by the App (the <strong>text transcript</strong> of your narration, however, does sync to your iCloud if you enable cloud sync — see Section 4.3).</p>
+
+  <h3 id="s4-5">4.5 The <code>punchlist-mcp</code> package (runs on your own computer)</h3>
+
+  <p>The open-source <code>punchlist-mcp</code> package pulls sessions from your phone over the local network or from your iCloud database via Apple's CloudKit Web Services. On your computer it:</p>
+
+  <ul>
+    <li>caches fetched session data at <code>~/.punchlist-mcp/cache</code>;</li>
+    <li>stores its secrets (device pairing tokens and, if you use it, the iCloud web-authentication token) in the <strong>macOS login Keychain</strong> (service <code>punchlist-mcp</code>), with <code>~/.punchlist-mcp/config.json</code> holding only references to the Keychain entries; on other platforms and in headless/remote environments, where no Keychain is available, secrets fall back to plaintext storage in <code>config.json</code> with owner-only (0600) file permissions. Existing plaintext configurations are migrated to the Keychain automatically on first load on macOS.</li>
+  </ul>
+
+  <p>It also offers a user-initiated <code>export_icloud_credentials</code> tool that obtains a CloudKit Web Services web-authentication token via Apple ID sign-in in your browser and prints it as environment variables so you can use it in a remote, headless, or CI environment. <strong>Treat that token like your password.</strong> It is a web-authentication token tied to your Apple ID's CloudKit web session — treat it as granting whatever access that session grants, not merely access to this App's data — and anyone who has it can, at minimum, read the sessions you have synced. Only export it deliberately, only paste it into environments you trust, and revoke it when you are done: sign out of the associated iCloud web session, or rotate your Apple ID sessions (for example, by changing your Apple ID password), to invalidate it.</p>
+
+  <p><strong>Important:</strong> deleting a session on your phone does <strong>not</strong> delete copies already fetched to your computers or remote environments, and anything you hand to an LLM or agent is governed by that provider's terms, not ours. You manage those copies.</p>
+
+  <h3 id="s4-6">4.6 Identifiers</h3>
+
+  <ul>
+    <li><strong>No accounts, no email addresses, no phone numbers.</strong> The App has no sign-up.</li>
+    <li><strong>No advertising identifier (IDFA) and no identifierForVendor.</strong></li>
+    <li>A <strong>random 8-character device identifier</strong> is generated on install (from a secure random source) and used solely to tell your devices apart in your own iCloud data. It is not derived from your hardware and cannot identify you to us.</li>
+    <li>Session metadata and crash reports include your <strong>device model marketing name, OS version, and app version</strong>.</li>
+  </ul>
+
+  <h3 id="s4-7">4.7 Analytics and crash reporting (Google Firebase)</h3>
+
+  <p>The shipped App (main app only, not the broadcast extension) includes <strong>Google Firebase Analytics</strong> and <strong>Crashlytics</strong>. The complete list of <strong>custom analytics events we log</strong> is:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Event</th><th>Parameters</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>session_saved</code></td><td>session type, entry count</td></tr>
+        <tr><td><code>session_processed</code></td><td>source (e.g., LAN or cloud)</td></tr>
+        <tr><td><code>device_paired</code></td><td>—</td></tr>
+        <tr><td><code>crash_report_filed</code></td><td>—</td></tr>
+        <tr><td><code>cloud_upload</code></td><td>success (true/false)</td></tr>
+      </tbody>
+    </table>
   </div>
+
+  <p>In addition to these custom events, <strong>Firebase automatically collects standard events and telemetry</strong> — such as <code>first_open</code>, <code>session_start</code>, and <code>screen_view</code>, along with an app-instance identifier and device/usage metadata — as described in Google's privacy documentation (Section 6).</p>
+
+  <p><strong>This is your choice.</strong> In the <strong>EEA and UK</strong>, analytics and crash sharing is <strong>off by default</strong> and only ever starts if you opt in (during onboarding or later in Settings). <strong>Everywhere else</strong>, it is on by default and Settings includes a "<strong>Share anonymous usage &amp; crash reports</strong>" toggle; turning it off immediately stops both Firebase Analytics and Crashlytics collection. Details in Section 7.</p>
+
+  <p><strong>No screenshot, transcript, video, or audio content is ever included in analytics events.</strong> Crashlytics sends crash stack traces and device metadata (device model, OS version, app version, and similar diagnostics) to Google when the App crashes. A Google ads-related SDK component is present transitively via Firebase, but advertising features are disabled: the App shows no ads, requests no App Tracking Transparency permission, and does no cross-app tracking.</p>
+
+  <p>Separately, Apple's <strong>MetricKit</strong> framework provides the App with crash diagnostics on-device; the App turns these into "crash sessions" that flow through the same local pipeline as your other sessions (they stay on your device unless you sync or transfer them, like any session).</p>
+
+  <h3 id="s4-8">4.8 Speech-model downloads (Hugging Face)</h3>
+
+  <p>If you choose the optional whisper.cpp transcription engine, the App <strong>downloads</strong> model files from <code>huggingface.co</code>. This is a download only: no recordings, transcripts, or personal data are sent to Hugging Face. Like any web download, Hugging Face's servers see your IP address when serving the file.</p>
+
+  <h3 id="s4-9">4.9 Tester Feedback Mode (sharing a session with an app's developer)</h3>
+
+  <p>Tester Feedback Mode is an optional feature that lets a developer invite other people ("<strong>testers</strong>") to record feedback sessions on the developer's app and send them to the developer. It is the one part of Punchlist where a session <strong>you</strong> record is delivered to <strong>another person</strong> rather than staying only in your own hands. It is off unless you are invited: a developer creates a "<strong>feedback group</strong>" for their app and shares an invite link (an Apple CloudKit share URL); opening that link adds the shared app to your Apps screen, marked as a feedback group.</p>
+
+  <p><strong>If you are a tester (you accepted an invite):</strong></p>
+
+  <ul>
+    <li><strong>Consent first.</strong> Before your first feedback capture, the App shows a consent screen explaining what is captured, that it goes to the app's <strong>developer</strong> (not to DoMore Tech), that your spoken narration is included <strong>as text</strong>, and that the group expires after 90 days. You must agree to proceed.</li>
+    <li><strong>What your submission contains:</strong> the <strong>screenshots</strong> of the screens you visited and the session <strong><code>manifest.json</code></strong> (session metadata plus the <strong>full text transcript</strong> of your narration) — and nothing else. Your <strong>screen-recording video and raw microphone audio are never included</strong>; no video file and no audio file leave your device through this feature.</li>
+    <li><strong>Where it goes:</strong> your submission is uploaded into the <strong>developer's own iCloud</strong> (a shared area of the developer's private CloudKit database). It counts against the <strong>developer's</strong> iCloud storage, not yours; submitting never uses your iCloud storage. The recipient is the developer who invited you — <strong>DoMore Tech does not receive, host, or access your submission.</strong></li>
+    <li><strong>Review before sending:</strong> you can review the captured screens and transcript and drop frames or the whole session before anything is sent, and you can decline to send.</li>
+    <li><strong>Retraction:</strong> after you send a session you can <strong>retract</strong> it, which deletes that session's record from the developer's iCloud. Retraction <strong>cannot reach a copy the developer has already fetched</strong> to their own computer or tools — once fetched, that copy is outside the App's control, the same as any file someone has already downloaded.</li>
+    <li><strong>Block/leave:</strong> the developer can remove you from the group at any time, which ends your access and stops further submissions; you can also leave the group yourself.</li>
+    <li><strong>Only the inviting developer receives your submissions</strong> through the App.</li>
+  </ul>
+
+  <p><strong>If you are a developer (you invited testers):</strong></p>
+
+  <ul>
+    <li>Tester submissions arrive in <strong>your own iCloud</strong> and are yours to triage. Because you are receiving other people's recordings of feedback, <strong>you — not DoMore Tech — decide what to do with them</strong>, and you are responsible for handling them lawfully, including any personal information they contain about the tester or others (see the Terms of Service).</li>
+    <li>You can end or process a session, remove a tester, or delete the whole group; doing so <strong>deletes the affected tester submissions from your iCloud</strong>. Copies you have already fetched to your computer or other tools are managed by you.</li>
+    <li>A group is limited to the platform's maximum of testers per group (currently <strong>100</strong>, set by Apple's CloudKit sharing limit).</li>
+  </ul>
+
+  <p><strong>Retention and auto-deletion:</strong> a feedback group <strong>automatically expires 90 days after it is created</strong>. At expiry the invite is revoked and the tester-submitted records are deleted from iCloud. A developer can also end/process a session or delete the group sooner, and a tester can retract a sent session — each of which deletes the corresponding record from iCloud earlier. As always, copies already fetched to a computer are outside the App's reach.</p>
+
+  <p><strong>DoMore Tech's role is unchanged:</strong> we still operate no server that receives these sessions and cannot see their contents. The data moves between a tester's device and the inviting developer's iCloud using Apple's CloudKit sharing, both outside our access.</p>
+
+  <h2 id="s5">5. What We Do NOT Do</h2>
+
+  <ul>
+    <li>We do <strong>not</strong> require or offer accounts, and we collect no names, emails, or contact details through the App.</li>
+    <li>We do <strong>not</strong> receive, store, or access your recordings, screenshots, transcripts, or audio.</li>
+    <li>We do <strong>not</strong> sell or rent personal information, and we do not "share" it for cross-context behavioral advertising (as those terms are defined in the California Consumer Privacy Act).</li>
+    <li>We show <strong>no ads</strong>, use <strong>no ad networks</strong>, and do <strong>no tracking across other companies' apps or websites</strong> (no IDFA/ATT).</li>
+  </ul>
+
+  <h2 id="s6">6. Third-Party Service Providers</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Provider</th><th>What it does for the App</th><th>Data involved</th><th>Privacy policy</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Google (Firebase Analytics, Crashlytics)</strong></td>
+          <td>Usage analytics and crash reporting</td>
+          <td>Events in Section 4.7, crash stack traces, device metadata, app-instance identifiers</td>
+          <td><a href="https://firebase.google.com/support/privacy" rel="noopener">firebase.google.com/support/privacy</a></td>
+        </tr>
+        <tr>
+          <td><strong>Apple</strong></td>
+          <td>iCloud/CloudKit (your private database), on-device speech recognition, ReplayKit screen recording, MetricKit crash diagnostics, App Store distribution</td>
+          <td>Your synced sessions (in <strong>your</strong> iCloud account, not accessible to us); on-device processing</td>
+          <td><a href="https://www.apple.com/legal/privacy/" rel="noopener">apple.com/legal/privacy</a></td>
+        </tr>
+        <tr>
+          <td><strong>Hugging Face</strong></td>
+          <td>Hosts optional whisper.cpp speech-model files for download</td>
+          <td>Download request only (IP address to serve the file); no user content sent</td>
+          <td><a href="https://huggingface.co/privacy" rel="noopener">huggingface.co/privacy</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="s7">7. Legal Bases for Processing (GDPR/UK GDPR)</h2>
+
+  <p>Where the EU or UK General Data Protection Regulation applies, our legal bases are:</p>
+
+  <ul>
+    <li><strong>Your recordings and session content:</strong> processed by software running on <strong>your</strong> device and moved only to destinations you own, at your instruction. To the extent this involves us at all, the basis is <strong>performance of a contract</strong> (providing the App you asked for); in substance, you — not we — hold this data.</li>
+    <li><strong>Optional iCloud sync and local-network transfer:</strong> <strong>consent</strong>, given by your affirmative act of enabling each feature (both are off by default), withdrawable at any time by turning the feature off (turning off iCloud sync will also delete the App's data from your iCloud database).</li>
+    <li><strong>Analytics and crash reporting (Section 4.7) — in the EEA and UK: your consent.</strong> If your device's region is in the European Economic Area or the United Kingdom, analytics and crash sharing is <strong>off by default</strong> and is enabled only if you opt in. You can withdraw consent at any time by turning it off in Settings.</li>
+    <li><strong>Analytics and crash reporting — elsewhere:</strong> our <strong>legitimate interests</strong> in understanding aggregate usage and fixing crashes in a free indie app, balanced by strict data minimization (no content, no advertising identifiers, no cross-app tracking) and by an <strong>opt-out</strong> you can exercise at any time.</li>
+  </ul>
+
+  <p><strong>Your analytics choice, region by region:</strong></p>
+
+  <ul>
+    <li><strong>EEA and UK (opt-in):</strong> on first launch, the onboarding screen offers an optional "<strong>Share anonymous usage &amp; crash reports</strong>" toggle, <strong>off by default</strong>, with the note "Optional — helps fix bugs. Never includes your recordings or transcripts. Change anytime in Settings." Nothing is sent to Firebase — not even the automatic <code>first_open</code> event — unless and until you turn it on. Your region is determined from your device's locale region setting (EU member states plus Iceland, Liechtenstein, Norway, and the United Kingdom).</li>
+    <li><strong>Everywhere else (opt-out):</strong> sharing is <strong>on by default</strong>, with no onboarding prompt; the same "<strong>Share anonymous usage &amp; crash reports</strong>" toggle is in <strong>Settings &gt; Privacy</strong>.</li>
+  </ul>
+
+  <p>In both cases: turning the toggle off <strong>immediately stops</strong> both Firebase Analytics and Crashlytics collection, and turning it on re-enables them. Under the hood, collection is disabled at app launch (via configuration keys) until the App applies your stored choice, so data is never collected contrary to your setting; your choice is made once and is not reset by app updates. If you stop sharing, you can also ask us to have Google delete the analytics data already associated with your app instance (Section 8).</p>
+
+  <h2 id="s8">8. Data Retention and Deletion</h2>
+
+  <ul>
+    <li><strong>On your device:</strong> sessions are kept until you delete them in the App; deleting a session removes its entire folder, including raw audio.</li>
+    <li><strong>Your iCloud database:</strong> synced sessions are kept until you delete the session (deletion propagates to iCloud, queued if you are offline) or disable cloud sync (which <strong>will delete</strong> the App's entire iCloud zone). Deleting the App's iCloud data is also possible through Apple's iCloud storage management.</li>
+    <li><strong>Copies on your computers and remote environments:</strong> managed by you. Deleting a session on the phone, or disabling cloud sync, does not — and cannot — delete copies already fetched by <code>punchlist-mcp</code> (e.g., <code>~/.punchlist-mcp/cache</code>) or shared with third parties such as LLM providers. Neither we nor the App can reach those copies; only you can delete them, where you put them.</li>
+    <li><strong>Tester feedback submissions (Section 4.9):</strong> if you submit feedback as a tester, your submission is kept in the <strong>inviting developer's iCloud</strong> until the developer processes or deletes it, you retract it, or the feedback group reaches its <strong>90-day</strong> expiry — whichever comes first — at which point the record is deleted from iCloud. Copies the developer has already fetched to their own computer are outside the App's control; only the developer can delete those.</li>
+    <li><strong>Analytics and crash data:</strong> retained by Google Firebase — our Firebase Analytics retention setting is <strong>14 months</strong> for identifier-associated event data, after which it is deleted or aggregated; we do not maintain a separate copy.</li>
+  </ul>
+
+  <h2 id="s9">9. Recordings May Capture Other People (Incidental Third-Party Data)</h2>
+
+  <p>Because screen recording is system-wide and the microphone is live, your sessions can incidentally capture <strong>other people's</strong> information — voices in the room, their messages or notifications appearing on your screen, and content from other apps. The App shows you a one-time notice about this before your first recording, but it has no mechanism to obtain those people's consent for you.</p>
+
+  <p><strong>You are the controller of what you record.</strong> DoMore Tech never receives or processes the contents of your recordings, and we cannot see, moderate, or delete third-party data inside them. You are responsible for complying with recording-consent, wiretap, and privacy laws that apply to you, and for honoring any request by a recorded person to delete their data from your copies. This is covered in more detail in Section 6 of the Terms of Service.</p>
+
+  <h2 id="s10">10. Your Rights</h2>
+
+  <p>Because your content lives on your own device, your own iCloud account, and your own computers, the most important rights — <strong>access, portability, and deletion</strong> — are self-service: open the App and your files, export or delete sessions, disable sync, and delete cached copies on your computers.</p>
+
+  <p>For the limited data we are responsible for (analytics and crash reporting):</p>
+
+  <ul>
+    <li><strong>GDPR / UK GDPR:</strong> you have rights of access, rectification, erasure, restriction, objection (including to legitimate-interests processing such as analytics — the quickest way to object is the Settings toggle described in Section 7), and portability, and the right to lodge a complaint with your supervisory authority (or the UK ICO). Contact us at <strong><a href="mailto:support@domoretech.net">support@domoretech.net</a></strong> to exercise them; note that analytics data is not linked to your name or contact details, so we may need you to provide technical identifiers (or we may be unable to identify your data at all, in which case we will tell you).</li>
+    <li><strong>California (CCPA/CPRA):</strong> you have the right to know, delete, and correct personal information, and the right to non-discrimination for exercising your rights. <strong>We do not sell personal information and do not share it for cross-context behavioral advertising</strong>, so there is nothing to opt out of under "Do Not Sell or Share." We also do not use or disclose sensitive personal information for purposes requiring a right to limit.</li>
+    <li><strong>Other jurisdictions:</strong> we will honor analogous rights under other applicable privacy laws (e.g., other U.S. state laws, PIPEDA) on request.</li>
+  </ul>
+
+  <h2 id="s11">11. Security</h2>
+
+  <ul>
+    <li><strong>Local network transfer:</strong> TLS-only in-app server (it refuses to start without a TLS identity), a P-256 identity stored in the iOS Keychain, certificate pinning established at pairing (trust-on-first-use — so the first pairing should be done on a network you trust), 6-digit pairing codes exchanged for 32-byte bearer tokens, HMAC-signed requests with replay (nonce) protection, and throttling against pairing brute-force attempts.</li>
+    <li><strong>On device:</strong> iOS's built-in file protection encrypts session data at rest; the App does not implement an additional passphrase layer.</li>
+    <li><strong>On your computer:</strong> on macOS, <code>punchlist-mcp</code> stores pairing tokens and iCloud web-auth tokens in your login Keychain (service <code>punchlist-mcp</code>); on other platforms and in headless/remote environments it falls back to a plaintext file readable only by your user account (0600) — protect those environments accordingly. The credential-export tool shows a security warning with revocation guidance at export time; treat exported iCloud web-auth tokens like passwords (Section 4.5).</li>
+  </ul>
+
+  <p>No system is perfectly secure; the design goal is that even a breach of DoMore Tech could not expose your recordings, because we never have them.</p>
+
+  <h2 id="s12">12. International Data Transfers</h2>
+
+  <p>Your session content is transferred only where you send it (your iCloud account, your computers). The analytics and crash data described in Section 4.7 is processed on Google's global infrastructure, and iCloud data is processed on Apple's infrastructure, which may involve transfers to the United States and other countries. Google and Apple maintain recognized transfer safeguards (such as EU Standard Contractual Clauses and, where applicable, EU–US Data Privacy Framework participation) as described in their privacy documentation linked in Section 6.</p>
+
+  <h2 id="s13">13. Children's Privacy</h2>
+
+  <p>Punchlist is a developer tool and is <strong>not directed to children</strong>. It is not intended for use by anyone under 13 (or under 16 in the EEA/UK, or the applicable minimum age where you live), and we do not knowingly collect personal information from children. If you believe a child has used the App and analytics data may have been collected, contact us at <strong><a href="mailto:support@domoretech.net">support@domoretech.net</a></strong> and we will work to delete it.</p>
+
+  <h2 id="s14">14. Changes to This Policy</h2>
+
+  <p>We may update this policy as the App evolves (for example, if we add features that change how data flows, or introduce paid features). Material changes will be announced with reasonable notice — in the App, in release notes, or where this policy is published — and the "Last Updated" date above will change. Earlier versions are available on request.</p>
+
+  <h2 id="s15">15. Contact</h2>
+
+  <p><strong>DoMore Tech LLC</strong> — developer and publisher of Punchlist<br>
+  Address: 2222 W Grand River Ave, Ste A, Okemos, MI 48864<br>
+  Email: <a href="mailto:support@domoretech.net">support@domoretech.net</a><br>
+  Phone: 517-649-1260</p>
+
+  <p>Questions, privacy-rights requests, and complaints about the App should be directed to DoMore Tech at the address above. Apple is not a party to, and is not responsible for, the App's privacy practices; the agreement governing your use of the App is between you and DoMore Tech only, as described in the <a href="terms.html">Terms of Service</a>.</p>
+
+  <footer>
+    <p>Punchlist — DoMore Tech LLC · <a href="landing.html">Home</a> · <a href="terms.html">Terms of Service</a></p>
+  </footer>
 </main>
 </body>
 </html>

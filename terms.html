@@ -5,120 +5,310 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="robots" content="all">
 <title>Terms of Service — Punchlist</title>
+<meta name="description" content="Terms of Service and end-user license agreement for the Punchlist iOS app by DoMore Tech LLC.">
 <style>
   :root {
     color-scheme: light dark;
     --bg: #0A0A0C; --surface: #16161A; --border: #26262C;
-    --text: #F5F5F7; --muted: #98989F; --accent: #2F7CF6;
+    --text: #F5F5F7; --muted: #98989F;
+    --accent: #2F7CF6; --code-bg: #131317;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg: #FFFFFF; --surface: #F5F5F7; --border: #E5E5EA; --text: #1D1D1F; --muted: #6E6E73; }
+    :root {
+      --bg: #FFFFFF; --surface: #F5F5F7; --border: #E5E5EA;
+      --text: #1D1D1F; --muted: #6E6E73; --code-bg: #F0F0F3;
+    }
   }
   * { box-sizing: border-box; margin: 0; }
   html { scroll-behavior: smooth; }
   body {
     font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    background: var(--bg); color: var(--text); padding: 0 20px 80px;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--text); padding: 0 20px 72px;
   }
+  main { max-width: 70ch; margin: 0 auto; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
   nav {
-    position: sticky; top: 0; z-index: 30; margin: 0 -20px; padding: 14px 20px;
-    display: flex; align-items: center; gap: 10px;
+    position: sticky; top: 0; z-index: 10;
+    margin: 0 -20px; padding: 14px 20px;
     background: color-mix(in srgb, var(--bg) 78%, transparent);
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-  nav .inner { max-width: 760px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; }
+  nav .inner { max-width: 70ch; margin: 0 auto; display: flex; align-items: center; gap: 10px; }
   nav .mark {
     width: 26px; height: 26px; border-radius: 7px;
     background: linear-gradient(160deg, #4A9BFF, #1E63E0);
     display: inline-flex; align-items: center; justify-content: center;
   }
   nav .mark svg { width: 15px; height: 15px; }
-  nav a.word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; color: var(--text); }
-  nav a.word:hover { text-decoration: none; }
-  nav .back { margin-left: auto; font-size: 15px; font-weight: 500; color: var(--muted); }
-  nav .back:hover { color: var(--accent); text-decoration: none; }
+  nav .word { font-weight: 700; font-size: 16px; letter-spacing: -0.2px; }
+  nav a.home { color: var(--text); display: flex; align-items: center; gap: 10px; }
+  nav a.home:hover { text-decoration: none; }
+  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 15px; font-weight: 500; }
+  nav .links a { color: var(--muted); }
+  nav .links a:hover { color: var(--accent); text-decoration: none; }
 
-  main { max-width: 760px; margin: 0 auto; }
+  header.doc { padding: 52px 0 8px; }
+  h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.18; }
+  .updated { margin-top: 12px; font-weight: 600; }
+  .doc-links { margin-top: 8px; font-size: 15px; color: var(--muted); }
 
-  .placeholder {
-    margin: 32px 0 40px; padding: 12px 16px; border-radius: 10px;
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
-    font-size: 13.5px; color: var(--text);
+  h2 { font-size: 23px; font-weight: 700; letter-spacing: -0.3px; margin: 44px 0 14px; line-height: 1.25; }
+  p { margin: 0 0 16px; }
+  ol, ul { margin: 0 0 16px; padding-left: 26px; }
+  li { margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+  strong { font-weight: 650; }
+  code {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1px 6px; font-size: 14.5px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
   }
-  h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.6px; margin: 56px 0 6px; }
-  .updated { color: var(--muted); font-size: 14px; }
-  h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.2px; margin: 40px 0 10px; }
-  p { color: var(--muted); margin: 0 0 14px; max-width: 68ch; }
-  p.lead { color: var(--text); }
-  ul { color: var(--muted); margin: 0 0 14px; padding-left: 22px; }
-  li { margin: 4px 0; }
-  .contact { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--border);
-             font-size: 14px; color: var(--muted); }
+  blockquote.summary {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent); border-radius: 12px;
+    padding: 14px 18px; margin: 0 0 18px;
+    font-size: 15.5px; color: var(--muted);
+  }
+  blockquote.summary p { margin: 0; }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 40px 0 24px; }
+  .closing { color: var(--muted); }
+
+  footer {
+    margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border);
+    font-size: 14px; color: var(--muted); text-align: center;
+  }
 </style>
 </head>
 <body>
 <nav>
   <div class="inner">
-    <a class="mark" href="landing.html" aria-label="Punchlist home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
-        <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
-        <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
-        <line x1="20" y1="10" x2="20" y2="14"/>
-      </svg>
+    <a class="home" href="landing.html">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round">
+          <line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/>
+          <line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="7" x2="16" y2="17"/>
+          <line x1="20" y1="10" x2="20" y2="14"/>
+        </svg>
+      </span>
+      <span class="word">Punchlist</span>
     </a>
-    <a class="word" href="landing.html">Punchlist</a>
-    <a class="back" href="landing.html">&larr; Back to home</a>
+    <span class="links"><a href="landing.html">Home</a><a href="privacy.html">Privacy Policy</a></span>
   </div>
 </nav>
-
 <main>
-  <h1>Terms of Service</h1>
-  <p class="updated">Last updated: [DATE] &middot; DoMore Tech LLC</p>
+  <header class="doc">
+    <h1>Punchlist Terms of Service (End-User License Agreement)</h1>
+    <p class="updated">Last Updated: July 12, 2026</p>
+    <p class="doc-links">See also: <a href="privacy.html">Privacy Policy</a></p>
+  </header>
 
-  <div class="placeholder">
-    <strong>Placeholder.</strong> This is a scaffold for the real Terms of Service. Replace the bracketed
-    text and section bodies with reviewed legal copy before launch.
-  </div>
+  <p>These Terms of Service (the "<strong>Terms</strong>") are a legal agreement between you and <strong>DoMore Tech LLC</strong> ("<strong>DoMore Tech</strong>," "<strong>we</strong>," "<strong>us</strong>," or "<strong>our</strong>") governing your use of the <strong>Punchlist</strong> iOS application (bundle identifier <code>com.domoretech.punchlist</code>) and any related documentation (together, the "<strong>App</strong>"). These Terms also serve as the end-user license agreement ("<strong>EULA</strong>") for the App.</p>
 
-  <p class="lead">These Terms of Service govern your use of the Punchlist app and website, provided by DoMore Tech LLC. By using Punchlist you agree to these terms.</p>
+  <p>Throughout these Terms you will see short boxes labeled "<em>Plain-language summary</em>." Those summaries are provided for convenience only, are <strong>not legally binding</strong>, and do not replace the full text of the section they summarize.</p>
 
-  <h2>1. The service</h2>
-  <p>Punchlist captures spoken sessions on your device and prepares them for your own coding agent. [Describe the service and any beta/TestFlight status.]</p>
+  <h2 id="s1">1. Acceptance of These Terms</h2>
 
-  <h2>2. Beta software</h2>
-  <p>Punchlist is currently distributed as a TestFlight beta and is provided as-is, without warranties. Features may change or break. [Add beta-specific terms.]</p>
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): When you set up the App, you check a box agreeing to these Terms and the Privacy Policy (both are linked right there so you can read them first). By agreeing there — or by using Punchlist — you accept these Terms. If you don't agree, don't use the App.</em></p></blockquote>
 
-  <h2>3. Acceptable use</h2>
-  <ul>
-    <li>[What users may and may not do with the app.]</li>
-    <li>[Prohibited conduct.]</li>
-  </ul>
+  <p>When you first launch the App, its setup screen asks you to agree to these Terms and the <a href="privacy.html">Privacy Policy</a>: both documents are linked next to the agreement checkbox and can be read in full within the App, and you must check the box confirming your agreement before you can begin using the App. By indicating your agreement there, or by downloading, installing, or using the App, you accept and agree to be bound by these Terms. If we materially update these Terms, the App will present the updated Terms to you in full for your affirmative re-acceptance before the changes apply to you (Section 18). If you do not agree to these Terms, do not accept them, do not download, install, or use the App, and delete it from your device.</p>
 
-  <h2>4. Your content</h2>
-  <p>You retain ownership of your sessions and the content you create. [Clarify any license you grant us, if any, and your responsibility for what you send to your agent.]</p>
+  <p>Your use of the App is also subject to our <a href="privacy.html">Privacy Policy</a>, which describes how the App handles information. The Privacy Policy is incorporated into these Terms by reference.</p>
 
-  <h2>5. Third-party services</h2>
-  <p>Punchlist is an independent product and is not affiliated with or endorsed by Anthropic or Apple. Your use of those services is governed by their own terms.</p>
+  <h2 id="s2">2. What Punchlist Is</h2>
 
-  <h2>6. Disclaimers &amp; limitation of liability</h2>
-  <p>[Standard as-is disclaimer and liability limitations.]</p>
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Punchlist is a developer tool. It records your screen and voice, transcribes your narration on your device, and packages the result so you can feed it to your own coding tools. Your recordings stay in your hands — we don't run a server that receives them.</em></p></blockquote>
 
-  <h2>7. Changes &amp; termination</h2>
-  <p>[How terms may change and how access may end.]</p>
+  <p>Punchlist is a developer feedback tool. Using Apple's ReplayKit broadcast feature, it records your device's screen system-wide while you narrate aloud, transcribes your narration on-device, and produces a session bundle (transcript, screenshots, video, and audio) intended to be used with your own development tools, including AI coding assistants that you choose and control.</p>
 
-  <h2>8. Governing law</h2>
-  <p>[Governing jurisdiction.]</p>
+  <p>The App is designed so that your recordings remain on your device, in your own private iCloud account (if you enable optional cloud sync), and on your own computers (if you transfer sessions over your local network). DoMore Tech does not operate a server that receives your recordings, and we cannot access the contents of your private iCloud database. One optional feature, <strong>Tester Feedback Mode</strong> (Section 22), is the exception: if a developer invites you as a tester and you accept, feedback sessions you choose to send are delivered to that developer's iCloud rather than staying only in your hands. Details are in the Privacy Policy.</p>
 
-  <div class="contact">
-    Questions about these terms? Contact us at <a href="mailto:legal@example.com">legal@example.com</a>. <!-- replace with real address -->
-  </div>
+  <h2 id="s3">3. Eligibility</h2>
+
+  <p>You must be at least <strong>13 years old</strong> (or at least <strong>16 years old</strong> if you are in the European Economic Area or the United Kingdom, or the higher minimum age required in your jurisdiction) to use the App. The App is a developer tool and is not directed to children. By using the App, you represent that you meet the applicable minimum age and, if you are under the age of legal majority where you live, that a parent or legal guardian has reviewed and agreed to these Terms on your behalf.</p>
+
+  <h2 id="s4">4. License Grant</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): You get a personal license to use the App on your Apple devices. You don't own the App itself, but you do own your recordings (see Section 8).</em></p></blockquote>
+
+  <p>Subject to these Terms, DoMore Tech grants you a <strong>personal, non-exclusive, non-transferable, revocable</strong> license to install and use the App on Apple-branded devices that you own or control, as permitted by the Usage Rules set forth in the Apple Media Services Terms and Conditions (the "<strong>App Store Terms</strong>"), except that the App may also be accessed and used by other accounts associated with you via Apple's Family Sharing or volume purchasing, where applicable.</p>
+
+  <p>Except as expressly permitted by these Terms or by applicable law that cannot be waived, you may not: (a) copy, modify, or create derivative works of the App; (b) distribute, sell, rent, lease, or sublicense the App; (c) reverse engineer, decompile, or disassemble the App; or (d) remove or alter any proprietary notices in the App. The App is licensed, not sold, to you. DoMore Tech and its licensors retain all rights, title, and interest in and to the App not expressly granted to you.</p>
+
+  <p>Nothing in this section limits your rights in <strong>your own content</strong> (Section 8) or your rights under the separate open-source license for the companion package (Section 5).</p>
+
+  <h2 id="s5">5. The punchlist-mcp Open-Source Companion</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): The <code>punchlist-mcp</code> npm package is separate, open-source software under the MIT License. These Terms don't restrict it; its own license governs.</em></p></blockquote>
+
+  <p>DoMore Tech also publishes a companion command-line package, <strong><code>punchlist-mcp</code></strong>, as open-source software under the <strong>MIT License</strong>. The package runs on your own computer and is distributed separately from the App (for example, via the npm registry).</p>
+
+  <p>These Terms and the MIT License operate on two separate tracks:</p>
+
+  <ol>
+    <li><strong>The code.</strong> Your use of the <code>punchlist-mcp</code> software itself — running it, copying it, modifying it, redistributing it — is governed by the MIT License that accompanies it, not by these Terms. Nothing in these Terms restricts the rights granted to you under that license, and the package is provided "AS IS" as stated in the MIT License.</li>
+    <li><strong>Claims against DoMore Tech relating to your session data.</strong> As an independent covenant between you and DoMore Tech, Sections 6 (Your Responsibility for Recording), 11 (Disclaimer of Warranties), 12 (Limitation of Liability), and 13 (Indemnification) of these Terms govern any claim against DoMore Tech arising out of or relating to your session data, your recordings, or credentials or tokens you export — <strong>regardless of which tool moved the data</strong> (the App, <code>punchlist-mcp</code>, or anything else). This covenant stands on its own and applies even though the <code>punchlist-mcp</code> code itself is licensed to you under the MIT License.</li>
+  </ol>
+
+  <h2 id="s6">6. Your Responsibility for Recording — Important</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): The App records everything on your screen and everything your microphone hears, system-wide. YOU are responsible for making sure your recordings are legal — including consent/wiretap laws, other people's private information, and other apps' content — and for what you do with the recordings afterward, including sending them to AI providers.</em></p></blockquote>
+
+  <p>The App's screen recording is <strong>system-wide</strong>: while a broadcast is active, it can capture any app on your screen, incoming notifications, audio from other apps, and your microphone, including voices of other people in the room and content belonging to third parties (for example, other people's messages, names, images, or copyrighted material displayed in other apps). The App does not and cannot determine whether you have the legal right to record any particular content or person.</p>
+
+  <p><strong>You are solely responsible for your recordings.</strong> By using the App, you represent, warrant, and agree that:</p>
+
+  <ol>
+    <li><strong>Recording and consent laws.</strong> You will comply with all laws that apply to your recordings, including wiretap, eavesdropping, and call/conversation-recording laws. Many jurisdictions (including a number of U.S. states) require the consent of <strong>all</strong> parties to record a conversation. It is your responsibility to obtain any required consent from anyone whose voice, image, communications, or personal information may be captured.</li>
+    <li><strong>Rights to captured content.</strong> You have, or will obtain, all rights necessary for any content your recordings capture, including content displayed by other apps and third-party intellectual property, and your recording and use of that content will not infringe or violate any third party's rights, including intellectual-property, privacy, publicity, and confidentiality rights and any applicable terms of service of other apps or services you record.</li>
+    <li><strong>Downstream use.</strong> You are solely responsible for what you do with your session bundles after they are created — including transferring them to your computers, syncing them to your iCloud account, exporting credentials, and <strong>submitting recordings, screenshots, transcripts, or audio to any AI/LLM provider or other third-party service</strong>. Any such third party's handling of your data is governed by your agreement with that third party, not by these Terms, and is outside DoMore Tech's control.</li>
+    <li><strong>Sensitive information.</strong> You will exercise appropriate care before recording screens or conversations that may contain passwords, financial information, health information, or other sensitive data — your own or anyone else's.</li>
+  </ol>
+
+  <p>The App displays a one-time notice before your first recording reminding you of these obligations, and you must acknowledge it to proceed. That notice is a reminder for your convenience only: obtaining any required consents and otherwise complying with the law remains <strong>solely your responsibility</strong>, whether or not the notice is shown.</p>
+
+  <h2 id="s7">7. Acceptable Use</h2>
+
+  <p>You agree not to use the App to: (a) violate any applicable law or regulation; (b) record any person or content unlawfully or without required consent; (c) harass, stalk, surveil, or harm any person; (d) infringe or misappropriate any third party's rights; (e) interfere with, disrupt, or attempt to gain unauthorized access to any system, network, or account, including the App's local-network transfer feature on devices or networks you do not control; or (f) attempt to circumvent security features of the App.</p>
+
+  <h2 id="s8">8. Your Content; Ownership</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Your recordings are yours. Because your content never passes through our servers, we don't need — and don't take — any meaningful license to it.</em></p></blockquote>
+
+  <p>As between you and DoMore Tech, <strong>you own your recordings, screenshots, transcripts, audio, and session bundles</strong> ("<strong>Your Content</strong>").</p>
+
+  <p>The App is architected so that Your Content is stored on your device, in your own private iCloud database, and on computers you pair — DoMore Tech does not receive, host, or access Your Content. Accordingly, you grant DoMore Tech <strong>no license to Your Content</strong>, except the limited, automatic processing performed by the App software itself on your device (for example, transcription and packaging) as needed to provide the App's features to you. If DoMore Tech ever introduces features that transmit Your Content to DoMore Tech, we will update these Terms and the Privacy Policy first and any such license will be limited to operating those features.</p>
+
+  <p>If you participate in <strong>Tester Feedback Mode</strong>, additional terms governing feedback you submit or receive — including the limited license a tester grants to the inviting developer — are in Section 22.</p>
+
+  <h2 id="s9">9. Transcription and Output Accuracy</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Speech-to-text makes mistakes. Check the output before you rely on it.</em></p></blockquote>
+
+  <p>The App's transcription is produced by automated on-device speech recognition and <strong>will contain errors</strong>, including misrecognized words, incorrect timestamps, and omissions. Screenshots, screen-change detection, crash diagnostics, and other automated outputs may likewise be incomplete or inaccurate. The App's output is provided for your convenience as a developer tool; you are responsible for reviewing it before relying on it, and DoMore Tech is not responsible for decisions made, code changes applied, or actions taken (by you or by any AI tool you use) based on the App's output.</p>
+
+  <h2 id="s10">10. Price; Future Paid Features</h2>
+
+  <p>The App is currently offered free of charge. DoMore Tech may in the future offer paid features, subscriptions, or paid versions of the App. Any pricing and payment terms will be presented before purchase, will be processed through Apple's App Store, and may be reflected in updates to these Terms in accordance with Section 18 (Changes to These Terms). Nothing in these Terms obligates DoMore Tech to continue offering the App or any feature for free or at all.</p>
+
+  <h2 id="s11">11. Disclaimer of Warranties</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): The App is provided as-is, with no guarantees. Some places don't allow this, so some of it may not apply to you.</em></p></blockquote>
+
+  <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE APP IS PROVIDED "<strong>AS IS</strong>" AND "<strong>AS AVAILABLE</strong>," WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND. DOMORE TECH DISCLAIMS ALL WARRANTIES AND CONDITIONS, WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, ACCURACY, QUIET ENJOYMENT, AND NON-INFRINGEMENT, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING OR USAGE OF TRADE. DOMORE TECH DOES NOT WARRANT THAT THE APP WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE; THAT DEFECTS WILL BE CORRECTED; OR THAT RECORDINGS, TRANSCRIPTS, SYNC, OR TRANSFERS WILL BE COMPLETE, ACCURATE, OR PRESERVED.</p>
+
+  <p>PRE-RELEASE AND BETA BUILDS OF THE APP (FOR EXAMPLE, TESTFLIGHT BUILDS) ARE EXPERIMENTAL, ARE PROVIDED FOR TESTING ONLY, MAY CONTAIN MORE ERRORS THAN RELEASE VERSIONS, AND MAY LOSE OR CORRUPT DATA, INCLUDING RECORDINGS AND SESSIONS. BACK UP ANYTHING YOU CARE ABOUT BEFORE USING A PRE-RELEASE BUILD.</p>
+
+  <p>SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR LIMITATIONS ON APPLICABLE STATUTORY RIGHTS OF A CONSUMER, SO SOME OR ALL OF THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. NOTHING IN THESE TERMS EXCLUDES OR LIMITS ANY WARRANTY OR RIGHT THAT CANNOT LAWFULLY BE EXCLUDED OR LIMITED.</p>
+
+  <h2 id="s12">12. Limitation of Liability</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Our total liability to you is capped at the greater of $20 or whatever you paid us for the App in the last 12 months (right now the App is free, so effectively $20). We're also not liable for indirect damages like lost data or lost profits. Some jurisdictions limit these limits.</em></p></blockquote>
+
+  <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:</p>
+
+  <ol>
+    <li><strong>Cap.</strong> THE TOTAL AGGREGATE LIABILITY OF DOMORE TECH AND ITS OWNER, MEMBERS, EMPLOYEES, AND AGENTS ARISING OUT OF OR RELATING TO THESE TERMS OR THE APP, UNDER ANY THEORY OF LIABILITY (CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY, OR OTHERWISE), WILL NOT EXCEED THE GREATER OF (A) <strong>TWENTY U.S. DOLLARS (US $20)</strong> AND (B) <strong>THE AMOUNTS YOU PAID DOMORE TECH FOR THE APP IN THE TWELVE (12) MONTHS BEFORE THE CLAIM AROSE</strong>. Because the App is currently free, this cap is currently effectively US $20.</li>
+    <li><strong>Excluded damages.</strong> DOMORE TECH WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF DATA, LOSS OF RECORDINGS, LOSS OF PROFITS, LOSS OF GOODWILL, OR COST OF SUBSTITUTE SERVICES, EVEN IF DOMORE TECH HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</li>
+    <li><strong>Basis of the bargain.</strong> THE LIMITATIONS IN THIS SECTION ARE A FUNDAMENTAL PART OF THE BASIS OF THE BARGAIN BETWEEN YOU AND DOMORE TECH, AND APPLY EVEN IF A LIMITED REMEDY FAILS OF ITS ESSENTIAL PURPOSE.</li>
+    <li><strong>Carve-outs.</strong> SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES, AND NOTHING IN THESE TERMS LIMITS OR EXCLUDES LIABILITY THAT CANNOT LAWFULLY BE LIMITED OR EXCLUDED, INCLUDING LIABILITY FOR FRAUD, GROSS NEGLIGENCE OR WILLFUL MISCONDUCT WHERE SUCH LIMITATION IS PROHIBITED, OR FOR DEATH OR PERSONAL INJURY CAUSED BY NEGLIGENCE WHERE SUCH LIMITATION IS PROHIBITED. IN THOSE JURISDICTIONS, LIABILITY IS LIMITED TO THE GREATEST EXTENT PERMITTED BY LAW.</li>
+    <li><strong>Statutory rights.</strong> For clarity, the limitations in this Section 12 do not apply to any claim or right that cannot be limited or waived by contract under applicable law, including any rights under the California Consumer Privacy Act (Cal. Civ. Code § 1798.192) or any similar statute that declares contractual waivers or limitations of its protections void and unenforceable.</li>
+  </ol>
+
+  <h2 id="s13">13. Indemnification</h2>
+
+  <p>To the extent permitted by applicable law, you agree to indemnify and hold harmless DoMore Tech and its owner, members, employees, and agents from and against third-party claims, damages, liabilities, and reasonable costs (including reasonable attorneys' fees) arising out of: (a) Your Content, including any claim that your recordings captured a person or content unlawfully or without required consent or rights; (b) your violation of any law or regulation in connection with the App; or (c) your misuse of the App in violation of these Terms. This obligation does not apply to the extent a claim arises from DoMore Tech's own violation of law or breach of these Terms. DoMore Tech will give you prompt notice of any such claim.</p>
+
+  <h2 id="s14">14. Dispute Resolution: Talk First, Then Court — No Arbitration</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Before either of us sues, we agree to tell each other in writing what the problem is and spend 60 days trying to work it out in good faith. After that, either side can go to court. If a legal deadline is about to expire, either side can file early to preserve the claim and the case pauses while we finish talking. Either side can also use small-claims court. There is no arbitration requirement in these Terms.</em></p></blockquote>
+
+  <ol>
+    <li><strong>Informal resolution first.</strong> Before filing any claim against the other, you and DoMore Tech each agree to first attempt in good faith to resolve the dispute informally by working together. The party raising the dispute must send the other party a written notice describing the dispute, the relief sought, and the sender's contact information (a "<strong>Dispute Notice</strong>"). Send Dispute Notices to DoMore Tech at <strong><a href="mailto:support@domoretech.net">support@domoretech.net</a></strong> or <strong>2222 W Grand River Ave, Ste A, Okemos, MI 48864</strong>. DoMore Tech will send Dispute Notices to you at an email address you have provided — because the App has no accounts, this includes the email address you used to open a dispute or otherwise correspond with us — or by any other lawful means. A Dispute Notice is deemed received <strong>three (3) days</strong> after it is sent. For <strong>sixty (60) days</strong> after a Dispute Notice is received, the parties will negotiate in good faith to try to resolve the dispute.</li>
+    <li><strong>Then court; preserving claims.</strong> Completing this 60-day negotiation period is a condition precedent to filing suit (other than in small-claims court, Section 14.3), subject to Section 15 (Governing Law and Venue) — <strong>except that</strong> either party may file a claim before or during the 60-day period <strong>solely to preserve the claim</strong> where the applicable statute of limitations or other filing deadline would otherwise expire. A party filing to preserve a claim must send a Dispute Notice no later than the filing (if it has not already done so), and the parties will jointly request that the action be stayed for the remainder of the 60-day negotiation period before the case proceeds. Nothing in this section shortens any limitations period or causes any claim to expire that would not otherwise expire.</li>
+    <li><strong>Small claims.</strong> Notwithstanding the above, <strong>either party may bring an individual claim in small-claims court</strong> in a court of competent jurisdiction (including, for you, the small-claims court where you reside) at any time, without first completing the informal-resolution process, so long as the claim qualifies for that court.</li>
+    <li><strong>No arbitration.</strong> These Terms do <strong>not</strong> require arbitration. Neither party is required to arbitrate any dispute under these Terms, and nothing in these Terms waives either party's right to a trial.</li>
+    <li><strong>Injunctive relief.</strong> Either party may seek temporary or preliminary injunctive relief in court at any time where needed to prevent irreparable harm; doing so does not waive the informal-resolution process for the underlying dispute.</li>
+  </ol>
+
+  <h2 id="s15">15. Governing Law and Venue</h2>
+
+  <p>These Terms and any dispute arising out of or relating to them or the App are governed by the laws of the <strong>State of Michigan</strong>, United States, without regard to its conflict-of-laws rules. Subject to Section 14, any claim not brought in small-claims court (Section 14.3) must be brought exclusively in the <strong>state courts sitting in Jackson County, Michigan</strong>, or the <strong>United States District Court for the Eastern District of Michigan</strong>, and both parties consent to personal jurisdiction and venue there — <strong>provided that</strong> if you are a consumer in a jurisdiction whose law gives you a non-waivable right to bring or defend claims in your local courts or under your local law, nothing in this section takes that right away from you.</p>
+
+  <h2 id="s16">16. Apple App Store Terms (Required EULA Provisions)</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Apple requires these clauses because you got the App through the App Store. In short: this agreement is between you and DoMore Tech (not Apple); Apple doesn't support or warrant the App beyond refunding the price (currently $0); and Apple can enforce this agreement as a third-party beneficiary.</em></p></blockquote>
+
+  <p>The following terms apply because the App is distributed through Apple's App Store. In this section, "<strong>Apple</strong>" means Apple Inc.</p>
+
+  <ol>
+    <li><strong>Acknowledgment.</strong> These Terms are concluded between you and DoMore Tech only, and <strong>not</strong> with Apple. Apple is not a party to these Terms. DoMore Tech, not Apple, is solely responsible for the App and its content. To the extent these Terms provide for usage rules that are less restrictive than or otherwise conflict with the App Store Terms, the App Store Terms control.</li>
+    <li><strong>Scope of license.</strong> The license granted to you for the App is limited to a non-transferable license to use the App on any Apple-branded products that you own or control, as permitted by the Usage Rules set forth in the App Store Terms, except that the App may be accessed and used by other accounts associated with you via Family Sharing or volume purchasing.</li>
+    <li><strong>Maintenance and support.</strong> DoMore Tech, not Apple, is solely responsible for providing any maintenance and support services with respect to the App, as specified in these Terms or as required under applicable law. Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the App.</li>
+    <li><strong>Warranty.</strong> DoMore Tech, not Apple, is solely responsible for any product warranties, whether express or implied by law, to the extent not effectively disclaimed. In the event of any failure of the App to conform to any applicable warranty, you may notify Apple, and Apple will refund the purchase price for the App (if any) to you. To the maximum extent permitted by applicable law, Apple will have no other warranty obligation whatsoever with respect to the App, and any other claims, losses, liabilities, damages, costs, or expenses attributable to any failure to conform to any warranty will be DoMore Tech's sole responsibility.</li>
+    <li><strong>Product claims.</strong> DoMore Tech, not Apple, is responsible for addressing any claims by you or any third party relating to the App or your possession and/or use of the App, including: (a) product liability claims; (b) any claim that the App fails to conform to any applicable legal or regulatory requirement; and (c) claims arising under consumer protection, privacy, or similar legislation.</li>
+    <li><strong>Intellectual-property claims.</strong> In the event of any third-party claim that the App or your possession and use of the App infringes that third party's intellectual property rights, DoMore Tech, not Apple, will be solely responsible for the investigation, defense, settlement, and discharge of any such claim.</li>
+    <li><strong>Legal compliance.</strong> You represent and warrant that (a) you are not located in a country that is subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a "terrorist supporting" country; and (b) you are not listed on any U.S. Government list of prohibited or restricted parties.</li>
+    <li><strong>Third-party terms.</strong> You must comply with applicable third-party terms of agreement when using the App (for example, your wireless data service agreement, and the terms of any third-party service you record or connect to).</li>
+    <li><strong>Third-party beneficiary.</strong> Apple, and Apple's subsidiaries, are third-party beneficiaries of these Terms, and upon your acceptance of these Terms, Apple will have the right (and will be deemed to have accepted the right) to enforce these Terms against you as a third-party beneficiary thereof.</li>
+    <li><strong>Developer name and address.</strong> Questions, complaints, or claims with respect to the App should be directed to: DoMore Tech LLC, 2222 W Grand River Ave, Ste A, Okemos, MI 48864; email <a href="mailto:support@domoretech.net">support@domoretech.net</a>; phone 517-649-1260.</li>
+  </ol>
+
+  <h2 id="s17">17. Export Compliance</h2>
+
+  <p>You may not use or export the App except as authorized by United States law and the laws of the jurisdiction in which the App was obtained. You represent that you are not located in any country, and are not a person, to which export of the App is prohibited under applicable export-control or sanctions laws (see also Section 16.7).</p>
+
+  <h2 id="s18">18. Changes to These Terms</h2>
+
+  <p>We may update these Terms from time to time — for example, to reflect new features, future paid offerings, or changes in law. If we make <strong>material</strong> changes, the App will present the updated Terms to you on launch — with the complete updated text — and ask you to review and affirmatively accept them; material changes will not apply to you until you accept them (or, if you choose not to accept, you must stop using the App and delete it). Release notes and the page where these Terms are published are supplemental notice only. Non-material changes (for example, clarifications and corrections that do not reduce your rights) take effect when posted with an updated "Last Updated" date. Changes are not retroactive.</p>
+
+  <h2 id="s19">19. Termination</h2>
+
+  <p>These Terms are effective until terminated. You may terminate them at any time by deleting the App. DoMore Tech may terminate these Terms and your license if you materially breach them. Upon termination, the license in Section 4 ends and you must stop using the App; Sections 6, 8, and 11 through 23 survive termination. Termination of these Terms does not affect your rights under the MIT License for <code>punchlist-mcp</code>, or your possession of Your Content, which remains yours.</p>
+
+  <h2 id="s20">20. Severability</h2>
+
+  <p>If any provision of these Terms is held invalid, illegal, or unenforceable, that provision will be enforced to the maximum extent permissible and the remaining provisions will remain in full force and effect.</p>
+
+  <h2 id="s21">21. Entire Agreement; Miscellaneous</h2>
+
+  <p>These Terms, together with the Privacy Policy, are the entire agreement between you and DoMore Tech regarding the App and supersede all prior agreements regarding the App (they do not supersede the separate MIT License for <code>punchlist-mcp</code>, which governs that package). You may not assign these Terms without our prior written consent; we may assign them in connection with a merger, acquisition, or sale of assets, or to a successor entity. Our failure to enforce any provision is not a waiver. There are no third-party beneficiaries to these Terms except as stated in Section 16.9 and the persons identified in Sections 12 and 13 (DoMore Tech's owner, members, employees, and agents), solely to enforce those sections.</p>
+
+  <h2 id="s22">22. Tester Feedback Mode</h2>
+
+  <blockquote class="summary"><p><em>Plain-language summary (non-binding): Tester Feedback Mode lets a developer invite other people to record feedback on the developer's app and send it to the developer. If you send feedback as a tester, screenshots and your narration transcript (never video or audio) go to that developer's iCloud; you consent first, can review before sending, and can retract afterward — but once the developer has fetched a copy, retraction can't reach it. Feedback groups auto-delete after 90 days. Developers who receive feedback are responsible for handling it lawfully.</em></p></blockquote>
+
+  <p>Tester Feedback Mode is an optional feature that lets a developer using the App (a "<strong>Developer</strong>") invite other people (each a "<strong>Tester</strong>") to record feedback sessions on the Developer's app and submit them to that Developer. A Developer creates a "<strong>Feedback Group</strong>" for an app and shares an invitation link (an Apple CloudKit share URL); a person who opens the link and joins becomes a Tester in that group. Both roles are subject to these Terms.</p>
+
+  <ol>
+    <li><strong>Roles and what is shared.</strong> A Tester's submission consists of screenshots and the session manifest (session metadata and the full text transcript of the Tester's narration) only. <strong>A Tester's screen-recording video and raw microphone audio are never included in a submission.</strong> Submissions are delivered into the inviting Developer's own iCloud storage (a shared area of that Developer's private iCloud database) and are received by that Developer, <strong>not</strong> by DoMore Tech. As between the Tester and the Developer, the Tester owns their submission as Your Content (Section 8); by submitting, the Tester grants the inviting Developer a <strong>non-exclusive, worldwide, royalty-free license</strong> to store, view, reproduce, and use the submission for the purpose of receiving and acting on the feedback (including reviewing it with the Developer's own development tools). DoMore Tech takes no license to submissions and does not receive, host, or access them.</li>
+    <li><strong>Consent before capture.</strong> Before a Tester's first capture in a Feedback Group, the App presents a consent screen describing what is captured, that it is sent to the app's Developer (not DoMore Tech), that the Tester's narration is included as text, and the 90-day retention window. A Tester must agree to proceed. The recording-responsibility obligations in Section 6 apply to Testers in full.</li>
+    <li><strong>Review, decline, and retraction.</strong> A Tester may review the captured screens and transcript and remove frames or the entire session before submitting, and may decline to submit. After submitting, a Tester may retract a session, which deletes that session's record from the Developer's iCloud. <strong>Retraction cannot reach a copy the Developer has already fetched</strong> to a computer or other tool; once fetched, such a copy is outside the App's control, and its handling and deletion are the Developer's responsibility. This is the same limitation that applies to any data another person has already downloaded.</li>
+    <li><strong>Group lifetime, capacity, and deletion.</strong> A Feedback Group automatically expires <strong>90 days after it is created</strong>; on expiry the invitation is revoked and the Tester-submitted records in the group are deleted from iCloud. A Developer may also end or process a session, remove a Tester from the group, or delete the group at any time — each of which deletes the affected records from the Developer's iCloud earlier. Removing a Tester ends that Tester's access and stops further submissions, and a Tester may leave a group at any time. A Feedback Group is limited to the platform maximum of Testers per group (currently <strong>100</strong>, set by Apple's CloudKit sharing limit).</li>
+    <li><strong>Developer responsibilities.</strong> A Developer who receives Tester submissions is responsible for handling them lawfully, including any personal information about the Tester or third parties that a submission may contain, and for providing any notices or obtaining any consents required of the Developer under applicable law. Received submissions are Your Content in the Developer's hands, and Sections 6, 11, 12, and 13 apply to the Developer's participation as they do to any other use of the App. DoMore Tech operates no server that receives submissions and cannot moderate, retrieve, or delete a submission once it has been fetched from iCloud by the Developer.</li>
+    <li><strong>No DoMore Tech intermediary.</strong> Tester Feedback Mode moves data between a Tester's device and the inviting Developer's iCloud using Apple's CloudKit sharing. DoMore Tech is not a party to, and is not responsible for, the feedback relationship between a Developer and a Tester, the content of any submission, or either party's use of the feature, beyond providing the App software itself as described in these Terms and the Privacy Policy.</li>
+  </ol>
+
+  <h2 id="s23">23. Contact</h2>
+
+  <p><strong>DoMore Tech LLC</strong><br>
+  Address: 2222 W Grand River Ave, Ste A, Okemos, MI 48864<br>
+  Email: <a href="mailto:support@domoretech.net">support@domoretech.net</a><br>
+  Phone: 517-649-1260</p>
+
+  <p>If you have any questions, complaints, or claims about these Terms or the App, please contact us at the address, email, or phone number above.</p>
+
+  <hr>
+
+  <p class="closing"><em>You acknowledge that this agreement is between you and DoMore Tech LLC only — not Apple — and that Apple and its subsidiaries are third-party beneficiaries of these Terms with the right to enforce them against you, as described in Section 16.</em></p>
+
+  <footer>
+    <p>Punchlist — DoMore Tech LLC · <a href="landing.html">Home</a> · <a href="privacy.html">Privacy Policy</a></p>
+  </footer>
 </main>
 </body>
 </html>
