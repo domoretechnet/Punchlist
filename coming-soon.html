@@ -27,7 +27,7 @@
 
   /* ── Ominous background: WebGL fog (MIT Ashima/stegu simplex noise). ──
      GPU render + in-shader dither = no banding. CSS radial is the no-WebGL fallback. */
-  .bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  .bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100lvh; min-height: 100%; z-index: 0; pointer-events: none; overflow: hidden;
     background: radial-gradient(120% 95% at 50% 42%, rgba(47,124,246,0.10), transparent 60%), var(--bg); }
   #fx { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .vignette { position: absolute; inset: 0;
