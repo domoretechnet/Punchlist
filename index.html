@@ -914,7 +914,7 @@
     var mm = document.querySelector(".moments");
     if (!mm) return;
     var r = mm.getBoundingClientRect();
-    if (r.top < (window.innerHeight || 800) * 0.82 && r.bottom > 0) {
+    if (r.top < (window.innerHeight || 800) * 1.0 && r.bottom > 0) {
       momentsRevealed = true;
       var readDelay = reduce ? 0 : 2000;
       var step = reduce ? 0 : 2600;
