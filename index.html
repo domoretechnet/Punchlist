@@ -397,10 +397,6 @@
     .tl-sub { display: none; }
     .moments { grid-template-columns: 1fr; row-gap: 46px; margin-top: 34px; position: relative; }
     /* dotted line drops from the icon (left) down past the cards */
-    .moments::before { content: ""; position: absolute; left: 33px; top: 0; bottom: 24px;
-      border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
-      z-index: 0; opacity: 0; transition: opacity .6s ease; }
-    body.moments-live .moments::before { opacity: 1; }
     .moment { position: relative; z-index: 2; }
     .moment.lower { margin-top: 0; }
     .collect-head { padding-left: 0; align-items: center; }
@@ -412,7 +408,7 @@
     .pitch-body p { margin: 0; max-width: none; text-align: center; }
     .pitch .pitch-icon { display: grid; width: 66px; height: 66px; flex: none; position: relative; margin-top: 2px; }
     .pitch-icon svg { width: 38px; height: 38px; }
-    .pitch-icon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 0; height: 240px;
+    .pitch-icon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 0; height: 190px;
       border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent); transform: translateX(-50%);
       z-index: 0; opacity: 0; transition: opacity .6s ease; }
     body.moments-live .pitch-icon::after { opacity: 1; }
@@ -421,6 +417,10 @@
     /* moment cards fade up along the timeline, one after another */
     .moment { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
     .moment.in { opacity: 1; transform: none; }
+    .moment:not(.lower)::before { content: ""; position: absolute; left: 33px; bottom: 100%; height: 54px;
+      border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
+      opacity: 0; transition: opacity .6s ease; z-index: 0; }
+    .moment:not(.lower).in::before { opacity: 1; }
   }
   @media (max-width: 460px) {
     h1 { font-size: 28px; }
@@ -916,7 +916,7 @@
     var r = mm.getBoundingClientRect();
     if (r.top < (window.innerHeight || 800) * 0.82 && r.bottom > 0) {
       momentsRevealed = true;
-      var readDelay = reduce ? 0 : 1700;
+      var readDelay = reduce ? 0 : 2800;
       var step = reduce ? 0 : 2600;
       setTimeout(function () { document.body.classList.add("moments-live"); }, readDelay);
       momentEls.forEach(function (m, k) { setTimeout(function () { m.classList.add("in"); }, readDelay + k * step); });
