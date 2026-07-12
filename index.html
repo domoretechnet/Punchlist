@@ -395,23 +395,26 @@
     .win-card.on { display: flex; min-height: 452px; max-width: 420px; margin: 0 auto; }
     .timeline { grid-template-columns: repeat(4, 1fr); }
     .tl-sub { display: none; }
-    .moments { grid-template-columns: 1fr; row-gap: 46px; margin-top: 34px; position: relative; }
-    .moments::before { content: ""; position: absolute; left: 50%; top: -34px; bottom: 20px;
+    .moments { grid-template-columns: 1fr; row-gap: 46px; margin-top: 10px; position: relative; }
+    /* dotted line drops from the icon (left) down past the cards */
+    .moments::before { content: ""; position: absolute; left: 28px; top: 0; bottom: 24px;
       border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
-      transform: translateX(-50%); z-index: 0; }
+      z-index: 0; }
     .moment { position: relative; z-index: 2; }
     .moment.lower { margin-top: 0; }
     .collect-head { padding-left: 0; align-items: center; }
     .collect-fan { display: none; }
-    .pitch { margin-left: auto; margin-right: auto; text-align: center; }
+    .pitch { margin-left: auto; margin-right: auto; text-align: left; margin-top: 30px; }
     .pitch p { margin-left: auto; margin-right: auto; }
     /* icon drops below the title with the paragraph beside it */
-    .pitch-body { display: flex; align-items: center; gap: 15px; text-align: left; max-width: 460px; margin: 4px auto 0; }
-    .pitch-body p { margin: 0; max-width: none; }
-    .pitch .pitch-icon { display: grid; width: 56px; height: 56px; flex: none; }
+    .pitch-body { display: flex; align-items: center; gap: 15px; text-align: left; max-width: 460px; margin: 22px auto 0; }
+    .pitch-body p { margin: 0; max-width: none; text-align: center; }
+    .pitch .pitch-icon { display: grid; width: 56px; height: 56px; flex: none; position: relative; }
+    .pitch-icon::after { content: ""; position: absolute; left: 50%; top: 100%; width: 0; height: 100px;
+      border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent); transform: translateX(-50%); z-index: 0; }
     .pitch-icon svg { width: 32px; height: 32px; }
     .collect-head { display: none; }
-    .collect { margin-top: 42px; }
+    .collect { margin-top: 10px; }
     /* moment cards fade up along the timeline, one after another */
     .moment { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
     .moment.in { opacity: 1; transform: none; }
