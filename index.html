@@ -417,7 +417,7 @@
     /* moment cards fade up along the timeline, one after another */
     .moment { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
     .moment.in { opacity: 1; transform: none; }
-    .moment:not(.lower)::before { content: ""; position: absolute; left: 33px; bottom: 100%; height: 54px;
+    .moment:not(.lower)::before { content: ""; position: absolute; left: 33px; bottom: 100%; height: 44px;
       border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
       opacity: 0; transition: opacity .6s ease; z-index: 0; }
     .moment:not(.lower).in::before { opacity: 1; }
@@ -916,7 +916,7 @@
     var r = mm.getBoundingClientRect();
     if (r.top < (window.innerHeight || 800) * 0.82 && r.bottom > 0) {
       momentsRevealed = true;
-      var readDelay = reduce ? 0 : 2800;
+      var readDelay = reduce ? 0 : 2000;
       var step = reduce ? 0 : 2600;
       setTimeout(function () { document.body.classList.add("moments-live"); }, readDelay);
       momentEls.forEach(function (m, k) { setTimeout(function () { m.classList.add("in"); }, readDelay + k * step); });
