@@ -322,6 +322,8 @@
   }
   @keyframes pitchGlowPulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
   .pitch p { margin-top: 20px; font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 58ch; }
+  .pitch-body { display: contents; }
+  .pitch .pitch-icon { display: none; }
   @media (max-width: 460px) { .pitch h2 { font-size: 24px; } .pitch p { margin-bottom: 34px; } }
 
   /* ── Capture-and-collect moments ───────────────── */
@@ -403,6 +405,16 @@
     .collect-fan { display: none; }
     .pitch { margin-left: auto; margin-right: auto; text-align: center; }
     .pitch p { margin-left: auto; margin-right: auto; }
+    /* icon drops below the title with the paragraph beside it */
+    .pitch-body { display: flex; align-items: center; gap: 15px; text-align: left; max-width: 460px; margin: 4px auto 0; }
+    .pitch-body p { margin: 0; max-width: none; }
+    .pitch .pitch-icon { display: grid; width: 56px; height: 56px; flex: none; }
+    .pitch-icon svg { width: 32px; height: 32px; }
+    .collect-head { display: none; }
+    .collect { margin-top: 42px; }
+    /* moment cards fade up along the timeline, one after another */
+    .moment { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+    .moment.in { opacity: 1; transform: none; }
   }
   @media (max-width: 460px) {
     h1 { font-size: 28px; }
@@ -555,7 +567,18 @@
     <!-- Pitch: capture the idea the moment it lands -->
     <section class="pitch">
       <h2 data-text="Make room for the next idea!">Make room for the next idea!</h2>
-      <p>Capture what you&rsquo;re thinking now, let your brain stand still. Punchlist keeps each thought connected to the screen where it began, ready for your agent when you&rsquo;re back at your keyboard.</p>
+      <div class="pitch-body">
+        <span class="collect-icon pitch-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <rect class="b" x="2.9" y="8" width="2.2" height="8" rx="1.1"/>
+            <rect class="b" x="6.9" y="5" width="2.2" height="14" rx="1.1"/>
+            <rect class="b" x="10.9" y="3" width="2.2" height="18" rx="1.1"/>
+            <rect class="b" x="14.9" y="5" width="2.2" height="14" rx="1.1"/>
+            <rect class="b" x="18.9" y="8" width="2.2" height="8" rx="1.1"/>
+          </svg>
+        </span>
+        <p>Capture what you&rsquo;re thinking now, let your brain stand still. Punchlist keeps each thought connected to the screen where it began, ready for your agent when you&rsquo;re back at your keyboard.</p>
+      </div>
     </section>
 
     <!-- Capture-and-collect moments -->
@@ -876,6 +899,24 @@
   window.addEventListener("resize", checkVisible, { passive: true });
   checkVisible();
   setTimeout(begin, 2000);
+
+  /* ── Capture-moment reveal (mobile): stagger the cards in once scrolled to ── */
+  var momentEls = Array.prototype.slice.call(document.querySelectorAll(".moments .moment"));
+  var momentsRevealed = false;
+  function revealMoments() {
+    if (momentsRevealed) return;
+    var mm = document.querySelector(".moments");
+    if (!mm) return;
+    var r = mm.getBoundingClientRect();
+    if (r.top < (window.innerHeight || 800) * 0.82 && r.bottom > 0) {
+      momentsRevealed = true;
+      var step = reduce ? 0 : 1200;
+      momentEls.forEach(function (m, k) { setTimeout(function () { m.classList.add("in"); }, k * step); });
+    }
+  }
+  window.addEventListener("scroll", revealMoments, { passive: true });
+  window.addEventListener("resize", revealMoments, { passive: true });
+  revealMoments();
 
   /* ── Pitch title white-glow sweep (left → right) ── */
   var pitchSec = document.querySelector(".pitch");
