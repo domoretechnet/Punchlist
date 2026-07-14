@@ -92,15 +92,15 @@
 
   /* ── Refined timeline ────────────────────────────────── */
   .timeline {
-    position: relative; display: grid; grid-template-columns: repeat(4, 1fr);
+    position: relative; display: grid; grid-template-columns: 1fr 1fr 1.34fr 1fr;
     margin: 0 0 22px;
   }
   .timeline::before {
-    content: ""; position: absolute; top: 16px; left: 12.5%; right: 12.5%;
+    content: ""; position: absolute; top: 16px; left: var(--tl-start, 12.5%); right: var(--tl-end, 12.5%);
     height: 1px; background: var(--border);
   }
   .tl-fill {
-    position: absolute; top: 16px; left: 12.5%; height: 1px; width: 0;
+    position: absolute; top: 16px; left: var(--tl-start, 12.5%); height: 1px; width: 0;
     background: var(--accent); z-index: 1; transition: width .55s cubic-bezier(.4,0,.2,1);
   }
   .tl-node {
@@ -180,6 +180,13 @@
     opacity: 0; transition: opacity .25s ease; }
   .phone .island .rec.on { opacity: 1; animation: recblink 2s ease-in-out infinite; }
   @keyframes recblink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+  /* Light mode: the phone app renders on a white screen, so flip its in-app text dark */
+  @media (prefers-color-scheme: light) {
+    .phone .screen { background: #fff; }
+    .phone .ss-store-title, .phone .ss-appname, .phone .cap-name, .phone .cap-tagline { color: #1D1D1F; }
+    .phone .cap-btn { color: #1E63E0; background: #EEF1FF; border-color: #DCE4FF; }
+    .phone .cap-btn.primary { color: #fff; }
+  }
   .pscreen { position: absolute; inset: 0; display: flex; flex-direction: column; }
   .app-icon { border-radius: 16px; display: grid; place-items: center; flex: none;
     background: linear-gradient(160deg, #4A9BFF, #1E63E0); }
@@ -342,7 +349,7 @@
     transform: rotate(-12deg); opacity: 0; -webkit-text-stroke: 0.5px rgba(0,0,0,0.25); }
   .m-orb .zz.z2 { left: 42px; bottom: 38px; font-size: 9px; }
   .m-when { display: block; font: 600 12px/1 var(--mono); color: var(--accent); letter-spacing: 0.04em; margin-bottom: 8px; }
-  .m-txt p { font-size: 16px; font-weight: 500; line-height: 1.45; color: #eef1f7; max-width: 240px; }
+  .m-txt p { font-size: 16px; font-weight: 500; line-height: 1.45; color: var(--text); max-width: 240px; }
 
   /* connectors + collecting icon */
   .collect-head { display: flex; flex-direction: column; align-items: flex-start; padding-left: calc(32% - 38px); }
@@ -668,8 +675,25 @@
     active = i;
     nodes.forEach(function (n, k) { n.classList.toggle("on", k <= i); });
     cards.forEach(function (c, k) { c.classList.toggle("on", k === i); });
-    fill.style.width = (i / 3 * 75) + "%";
+    fill.style.width = tlCenters ? (tlCenters[i] - tlCenters[0]) + "%" : (i / 3 * 75) + "%";
   }
+  /* Align the connector line + fill with the actual node centers (columns are uneven) */
+  var timelineEl = document.getElementById("timeline");
+  var tlCenters = null;
+  function layoutTimeline() {
+    if (!timelineEl || !nodes.length) return;
+    var tr = timelineEl.getBoundingClientRect();
+    if (!tr.width) return;
+    tlCenters = nodes.map(function (n) {
+      var r = n.getBoundingClientRect();
+      return (r.left + r.width / 2 - tr.left) / tr.width * 100;
+    });
+    timelineEl.style.setProperty("--tl-start", tlCenters[0] + "%");
+    timelineEl.style.setProperty("--tl-end", (100 - tlCenters[tlCenters.length - 1]) + "%");
+    fill.style.width = (tlCenters[active] - tlCenters[0]) + "%";
+  }
+  window.addEventListener("resize", layoutTimeline);
+  layoutTimeline();
   function startAuto() {
     stopAuto();
     if (reduce) { paint(3); return; }
